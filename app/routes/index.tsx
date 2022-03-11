@@ -5,6 +5,7 @@ import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import { MenuIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
 import ProductFilter from "../components/ProductFilter";
 import ProductList from "../components/ProductList";
+import BlogList from "../components/BlogList";
 
 type IndexData = {
   resources: Array<{ name: string; url: string }>;
@@ -502,10 +503,12 @@ export default function Index() {
       </header>
 
       {/* body */}
+      <BlogList />
       <ProductFilter>
-        <ProductList products={products} />
+        <ProductList />
       </ProductFilter>
       {/*  */}
+
       <footer className="bg-white" aria-labelledby="footer-heading">
         <h2 id="footer-heading" className="sr-only">
           Footer

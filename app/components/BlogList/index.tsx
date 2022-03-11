@@ -2,66 +2,54 @@
 /* eslint-disable @next/next/no-img-element */
 import { Link } from "remix";
 
-const productList = [
+const blogList = [
   {
     id: 1,
-    name: "Basic Tee",
-    href: "#",
-    image:
+    title: "Basic Tee",
+    thumpUrl:
       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
+    body: "Front of men's Basic Tee in black.",
   },
   {
     id: 2,
-    name: "Basic Tee",
-    href: "#",
-    image:
+    title: "Basic Tee",
+    thumpUrl:
       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
+    body: "Front of men's Basic Tee in black.",
   },
   {
     id: 3,
-    name: "Basic Tee",
-    href: "#",
-    image:
+    title: "Basic Tee",
+    thumpUrl:
       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
+    body: "Front of men's Basic Tee in black.",
   },
   {
     id: 4,
-    name: "Basic Tee",
-    href: "#",
-    image:
+    title: "Basic Tee",
+    thumpUrl:
       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
+    body: "Front of men's Basic Tee in black.",
   },
 ];
 
-export default function ProductList({ products = productList }) {
+export default function ProductList({ products = [...blogList] }) {
   return (
     <div className="bg-white">
       <div className="mx-auto p-8">
         <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
-          LATEST PRODUCTS
+          Blog
         </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products.map((product: any) => (
             <div key={product._id} className="group relative">
               <Link to={`/products/${product._id}`}>
-                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:aspect-none">
+                <div className="w-full  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:aspect-none">
                   <img
-                    src={product.image}
+                    src={product.thumpUrl}
                     alt={product.title}
-                    className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+                    className="w-full  object-center object-cover lg:w-full "
                   />
                 </div>
               </Link>
@@ -69,21 +57,11 @@ export default function ProductList({ products = productList }) {
                 <div>
                   <h3 className="text-gray-700">
                     <Link to={`/products/${product._id}`}>
-                      <a>
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {product.title}
-                      </a>
+                      <a>{product.title}</a>
                     </Link>
                   </h3>
                   <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                 </div>
-                <p className="text-sm font-medium text-gray-900">
-                  {product.price}đ
-                  {/* <span style={{
-                      textDecoration:'line-through'
-                    }}>{product.price}đ
-                    </span> */}
-                </p>
               </div>
             </div>
           ))}
