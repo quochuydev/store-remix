@@ -17,7 +17,6 @@ export default function Index() {
   const words = useLoaderData<any[]>() || [];
   const transition = useTransition();
   const supabase = useSupabase();
-  console.log(supabase.auth);
 
   return (
     <main className="p-2">

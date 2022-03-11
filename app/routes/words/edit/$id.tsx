@@ -14,7 +14,6 @@ export const action: ActionFunction = async ({ request, params }: any) => {
     definitions: formData.getAll("definition"),
   };
 
-  // Auth Related Code
   await setAuthToken(request);
 
   await supabase.from("words").update(updates).eq("id", id);

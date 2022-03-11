@@ -18,7 +18,6 @@ export default function Todos() {
 
   return (
     <div>
-      {/* <div todos={data} /> */}
       <form method="post">
         <input type="text" name="title" />
         <button type="submit">Create Todo</button>

@@ -9,56 +9,22 @@ import {
   useCatch,
 } from "remix";
 import type { LinksFunction } from "remix";
-import { useLoaderData, useSubmit } from "remix";
-
-import globalStylesUrl from "~/styles/global.css";
-import darkStylesUrl from "~/styles/dark.css";
-import { createClient } from "@supabase/supabase-js";
-import { SupabaseProvider } from "./utils/supabase-client";
-import { useSupabase } from "./utils/supabase-client";
+import styles from "./styles/app.css";
 
 export let links: LinksFunction = () => {
-  return [
-    { rel: "stylesheet", href: globalStylesUrl },
-    {
-      rel: "stylesheet",
-      href: darkStylesUrl,
-      media: "(prefers-color-scheme: dark)",
-    },
-  ];
-};
-
-const supabaseUrl = "https://vnvpxpkeapawydtfisxq.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzOTU0NjgwMCwiZXhwIjoxOTU1MTIyODAwfQ.MsTELqrifUTL5L4ko3H4n5gPOyNfshArW0n_EuiNeN0";
-export const loader = () => {
-  return {
-    supabaseKey,
-    supabaseUrl,
-  };
-};
-
-export const action = () => {
-  return {};
+  return [{ rel: "stylesheet", href: styles }];
 };
 
 export default function App() {
-  const loader = useLoaderData();
-
-  const supabase = createClient(loader.supabaseUrl, loader.supabaseKey);
-
   return (
     <Document>
-      <SupabaseProvider supabase={supabase}>
-        <Layout>
-          <Outlet />
-        </Layout>
-      </SupabaseProvider>
+      <Layout>
+        <Outlet />
+      </Layout>
     </Document>
   );
 }
 
-// https://remix.run/docs/en/v1/api/conventions#errorboundary
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
   return (
@@ -78,7 +44,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
   );
 }
 
-// https://remix.run/docs/en/v1/api/conventions#catchboundary
 export function CatchBoundary() {
   let caught = useCatch();
 
@@ -141,55 +106,7 @@ function Document({
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
-  const submit = useSubmit();
-  const supabase = useSupabase();
-
-  const handleSignOut = () => {
-    supabase.auth.signOut().then(() => {
-      submit(null, { method: "post", action: "/signout" });
-    });
-  };
-
-  console.log("session", supabase?.auth?.session());
-
-  return (
-    <div className="remix-app">
-      <header className="remix-app__header">
-        {JSON.stringify(supabase?.auth.user())}
-        {supabase?.auth?.session() && (
-          <button type="button" onClick={handleSignOut}>
-            Sign out
-          </button>
-        )}
-        <div className="container remix-app__header-content">
-          <Link to="/" title="Remix" className="remix-app__header-home-link">
-            <RemixLogo />
-          </Link>
-          <nav aria-label="Main navigation" className="remix-app__header-nav">
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <a href="https://remix.run/docs">Remix Docs</a>
-              </li>
-              <li>
-                <a href="https://github.com/remix-run/remix">GitHub</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-      <div className="remix-app__main">
-        <div className="container remix-app__main-content">{children}</div>
-      </div>
-      <footer className="remix-app__footer">
-        <div className="container remix-app__footer-content">
-          <p>&copy; You!</p>
-        </div>
-      </footer>
-    </div>
-  );
+  return <div>{children}</div>;
 }
 
 function RemixLogo() {

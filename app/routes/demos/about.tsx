@@ -1,16 +1,10 @@
 import { Outlet } from "remix";
 import type { MetaFunction, LinksFunction } from "remix";
 
-import stylesUrl from "~/styles/demos/about.css";
-
 export let meta: MetaFunction = () => {
   return {
-    title: "About Remix"
+    title: "About Remix",
   };
-};
-
-export let links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: stylesUrl }];
 };
 
 export default function Index() {
