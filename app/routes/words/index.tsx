@@ -14,9 +14,10 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function Index() {
-  const words = useLoaderData<any[]>();
+  const words = useLoaderData<any[]>() || [];
   const transition = useTransition();
   const supabase = useSupabase();
+  console.log(supabase.auth);
 
   return (
     <main className="p-2">
@@ -34,8 +35,7 @@ export default function Index() {
               </li>
             ))}
           </ul>
-          {/* Adding conditional rendering might cause a warning,
-          We'll deal with it later */}
+
           {supabase.auth.user() ? (
             <Form method="get" action={"/words/add"} className="pt-2">
               <button

@@ -37,6 +37,11 @@ export const loader = () => {
     supabaseUrl,
   };
 };
+
+export const action = () => {
+  return {};
+};
+
 export default function App() {
   const loader = useLoaderData();
 
@@ -145,10 +150,13 @@ function Layout({ children }: { children: React.ReactNode }) {
     });
   };
 
+  console.log("session", supabase?.auth?.session());
+
   return (
     <div className="remix-app">
       <header className="remix-app__header">
-        {supabase.auth.session() && (
+        {JSON.stringify(supabase?.auth.user())}
+        {supabase?.auth?.session() && (
           <button type="button" onClick={handleSignOut}>
             Sign out
           </button>

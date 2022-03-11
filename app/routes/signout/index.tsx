@@ -1,4 +1,4 @@
-import { destroySession, getSession } from "../utils/supabase.server";
+import { destroySession, getSession } from "~/utils/supabase.server";
 import { redirect } from "remix";
 import type { ActionFunction } from "remix";
 
