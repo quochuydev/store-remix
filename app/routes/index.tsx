@@ -3,6 +3,8 @@ import { useLoaderData, json, Link } from "remix";
 import React, { Fragment, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import { MenuIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
+import ProductFilter from "../components/ProductFilter";
+import ProductList from "../components/ProductList";
 
 type IndexData = {
   resources: Array<{ name: string; url: string }>;
@@ -154,6 +156,8 @@ const navigation = {
     },
   ],
 };
+
+const products: any = [];
 
 export default function Index() {
   let data = useLoaderData<IndexData>();
@@ -498,6 +502,10 @@ export default function Index() {
       </header>
 
       {/* body */}
+      <ProductFilter>
+        <ProductList products={products} />
+      </ProductFilter>
+      {/*  */}
       <footer className="bg-white" aria-labelledby="footer-heading">
         <h2 id="footer-heading" className="sr-only">
           Footer
