@@ -6,33 +6,49 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch
+  useCatch,
 } from "remix";
 import type { LinksFunction } from "remix";
+import { useLoaderData, useSubmit } from "remix";
 
 import globalStylesUrl from "~/styles/global.css";
 import darkStylesUrl from "~/styles/dark.css";
+import { createClient } from "@supabase/supabase-js";
+import { SupabaseProvider } from "./utils/supabase-client";
+import { useSupabase } from "./utils/supabase-client";
 
-// https://remix.run/api/app#links
 export let links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: globalStylesUrl },
     {
       rel: "stylesheet",
       href: darkStylesUrl,
-      media: "(prefers-color-scheme: dark)"
-    }
+      media: "(prefers-color-scheme: dark)",
+    },
   ];
 };
 
-// https://remix.run/api/conventions#default-export
-// https://remix.run/api/conventions#route-filenames
+const supabaseUrl = "https://vnvpxpkeapawydtfisxq.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzOTU0NjgwMCwiZXhwIjoxOTU1MTIyODAwfQ.MsTELqrifUTL5L4ko3H4n5gPOyNfshArW0n_EuiNeN0";
+export const loader = () => {
+  return {
+    supabaseKey,
+    supabaseUrl,
+  };
+};
 export default function App() {
+  const loader = useLoaderData();
+
+  const supabase = createClient(loader.supabaseUrl, loader.supabaseKey);
+
   return (
     <Document>
-      <Layout>
-        <Outlet />
-      </Layout>
+      <SupabaseProvider supabase={supabase}>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </SupabaseProvider>
     </Document>
   );
 }
@@ -95,7 +111,7 @@ export function CatchBoundary() {
 
 function Document({
   children,
-  title
+  title,
 }: {
   children: React.ReactNode;
   title?: string;
@@ -120,9 +136,23 @@ function Document({
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
+  const submit = useSubmit();
+  const supabase = useSupabase();
+
+  const handleSignOut = () => {
+    supabase.auth.signOut().then(() => {
+      submit(null, { method: "post", action: "/signout" });
+    });
+  };
+
   return (
     <div className="remix-app">
       <header className="remix-app__header">
+        {supabase.auth.session() && (
+          <button type="button" onClick={handleSignOut}>
+            Sign out
+          </button>
+        )}
         <div className="container remix-app__header-content">
           <Link to="/" title="Remix" className="remix-app__header-home-link">
             <RemixLogo />
