@@ -88,14 +88,7 @@ export default function AdminNewProduct() {
       image: null,
     },
     validationSchema: schema,
-    onSubmit: async (data) => {
-      console.log(data);
-      try {
-        formik.resetForm();
-      } catch (error) {
-        //
-      }
-    },
+    onSubmit: async (data) => {},
   });
 
   return (

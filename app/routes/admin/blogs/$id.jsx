@@ -23,16 +23,7 @@ export default function AdminEditBlog({ blog = {} }) {
       body: "",
     },
     validationSchema: schema,
-    onSubmit: async (data) => {
-      console.log(data);
-
-      try {
-        await blogService.update(blog.id, data);
-        toast("Success");
-      } catch (error) {
-        toast.error("Failed");
-      }
-    },
+    onSubmit: async (data) => {},
   });
 
   useEffect(() => {
@@ -51,7 +42,7 @@ export default function AdminEditBlog({ blog = {} }) {
         </div>
       </div>
 
-      <form onSubmit={formik.handleSubmit}>
+      <form method="post">
         {JSON.stringify(formik.values)}
         <div className="sm:col-span-4">
           <label
@@ -68,12 +59,7 @@ export default function AdminEditBlog({ blog = {} }) {
                   name="title"
                   id="title"
                   autoComplete="title"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values?.title}
-                  className={`flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm ${
-                    formik.errors?.title ? "border-red-300" : "border-gray-300"
-                  }`}
+                  className={`flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm ${"border-gray-300"}`}
                 />
               ),
               [formik.values?.title]

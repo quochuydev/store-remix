@@ -1,7 +1,6 @@
 import { useMemo, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { toast } from "react-toastify";
 import AdminLayout from "~/components/admin/Layout";
 import Uploader from "~/components/Uploader";
 import { productService } from "~/services";
@@ -61,16 +60,7 @@ export default function AdminUpdateProduct({}) {
       image: null,
     },
     validationSchema: schema,
-    onSubmit: async (data) => {
-      console.log(data);
-
-      try {
-        await productService.update(product.id, data);
-        toast("success");
-      } catch (error) {
-        toast.error("failed");
-      }
-    },
+    onSubmit: async (data) => {},
   });
 
   useEffect(() => {

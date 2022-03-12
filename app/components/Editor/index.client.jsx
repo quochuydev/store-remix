@@ -3,9 +3,9 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKConfig, CKOnReady } from "./utils";
 
-const Editor = ({ initValue, readOnly, onData }) => {
+const Editor = ({ initValue = "", readOnly, onData }) => {
   const handleChange = (evt, editor) => {
-    onData(editor.getData());
+    onData && onData(editor.getData());
   };
 
   return (

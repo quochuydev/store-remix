@@ -14,7 +14,7 @@ import { supabase } from "~/utils/supabase.server";
 
 export const loader: LoaderFunction = async ({ params }: any) => {
   const { data } = await supabase
-    .from("products")
+    .from("blogs")
     .select("*")
     .order("createdAt", { ascending: false });
 
@@ -39,15 +39,7 @@ export default function AdminBlogs() {
       body: "",
     },
     validationSchema: schema,
-    onSubmit: async (data) => {
-      console.log(data);
-
-      try {
-        toast("Success");
-      } catch (error) {
-        toast.error("Failed");
-      }
-    },
+    onSubmit: async (data) => {},
   });
 
   return (
@@ -91,30 +83,6 @@ export default function AdminBlogs() {
             name: "Created at",
             render: function Column(data: any) {
               return <>{new Date(data.createdAt).toDateString()}</>;
-            },
-          },
-          {
-            id: "publish",
-            name: "publish",
-            render: function Column(data: any) {
-              return (
-                <>
-                  <select
-                    onChange={async (event) => {
-                      await productService.update(data.id, {
-                        status: event.target.value,
-                      });
-                      toast("Updated successfully");
-                    }}
-                    value={data.status}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  >
-                    <option value={"new"}>New</option>
-                    <option value={"in-progress"}>In-progress</option>
-                    <option value={"done"}>Done</option>
-                  </select>
-                </>
-              );
             },
           },
           {
