@@ -1,13 +1,10 @@
 import type { MetaFunction, LoaderFunction } from "remix";
 import { useLoaderData, json, Link } from "remix";
-import React, { Fragment, useState } from "react";
-import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
-import { MenuIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
+import { useState } from "react";
 import ProductFilter from "~/components/ProductFilter";
 import ProductList from "~/components/ProductList";
 import BlogList from "~/components/BlogList";
 import BlogList2 from "~/components/BlogList2";
-import Cart from "~/components/Cart";
 import Header from "~/components/Header";
 import Footer from "~/components/Footer";
 import { supabase } from "~/utils/supabase.server";

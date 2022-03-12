@@ -3,7 +3,7 @@ import { redirect, useLoaderData } from "remix";
 import type { ActionFunction, LoaderFunction } from "remix";
 import AdminLayout from "~/components/admin/Layout";
 import { supabase } from "~/utils/supabase.server";
-import React, { useState } from "react";
+import { useState } from "react";
 import Editor from "~/components/Editor/Editor.client";
 
 export const loader: LoaderFunction = async ({ params }: any) => {
