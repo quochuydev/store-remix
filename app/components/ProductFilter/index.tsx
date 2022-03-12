@@ -247,7 +247,7 @@ export default function ProductFilter({ children }: any) {
             </div>
           </div>
 
-          <div aria-labelledby="products-heading" className="pt-6 pb-24">
+          <div aria-labelledby="products-heading" className="pt-6 pb-4">
             <h2 id="products-heading" className="sr-only">
               Products
             </h2>
@@ -274,6 +274,7 @@ export default function ProductFilter({ children }: any) {
                     as="div"
                     key={section.id}
                     className="border-b border-gray-200 py-6"
+                    defaultOpen={true}
                   >
                     {({ open }) => (
                       <>

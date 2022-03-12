@@ -6,6 +6,8 @@ import { MenuIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
 import ProductFilter from "~/components/ProductFilter";
 import ProductList from "~/components/ProductList";
 import BlogList from "~/components/BlogList";
+import BlogList2 from "~/components/BlogList2";
+import Cart from "~/components/Cart";
 import { supabase } from "~/utils/supabase.server";
 
 type IndexData = {
@@ -133,7 +135,8 @@ export let loader: LoaderFunction = async () => {
   const { data: blogs } = await supabase
     .from<any>("blogs")
     .select("*")
-    .order("createdAt", { ascending: false });
+    .order("createdAt", { ascending: false })
+    .limit(3);
 
   return json({ products, blogs });
 };
@@ -142,6 +145,7 @@ export default function Index() {
   let data = useLoaderData<IndexData>();
   const { products, blogs }: any = data;
   const [open, setOpen] = useState(false);
+  const [isOpenCart, setIsOpenCart] = useState(false);
 
   return (
     <div className="bg-white">
@@ -462,7 +466,13 @@ export default function Index() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="/cart">
+                  <Cart
+                    {...{
+                      isOpenCart,
+                      setIsOpenCart,
+                    }}
+                  />
+                  <a onClick={() => setIsOpenCart(true)}>
                     <a className="group -m-2 p-2 flex items-center">
                       <ShoppingBagIcon
                         className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
@@ -486,6 +496,7 @@ export default function Index() {
       <ProductFilter>
         <ProductList products={products} />
       </ProductFilter>
+      <BlogList2 blogs={blogs} />
       {/*  */}
 
       <footer className="bg-white" aria-labelledby="footer-heading">
