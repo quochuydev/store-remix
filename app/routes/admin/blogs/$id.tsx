@@ -1,30 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
-import { redirect } from "remix";
-import type { ActionFunction } from "remix";
+import { redirect, useLoaderData } from "remix";
+import type { ActionFunction, LoaderFunction } from "remix";
 import AdminLayout from "~/components/admin/Layout";
-import Editor from "~/components/Editor/Editor.client";
 import { supabase } from "~/utils/supabase.server";
-import { useState } from "react";
+import React, { useState } from "react";
+import Editor from "~/components/Editor/Editor.client";
 
-export const action: ActionFunction = async ({ request }: any) => {
+export const loader: LoaderFunction = async ({ params }: any) => {
+  const { data } = await supabase
+    .from<any>("blogs")
+    .select("*")
+    .eq("id", params.id as string)
+    .single();
+
+  return data;
+};
+
+export const action: ActionFunction = async ({ request, params }: any) => {
   const formData = await request.formData();
 
-  const createData = {
+  const updateData = {
     title: formData.get("title"),
     description: formData.get("description"),
   };
 
-  const { data, error } = await supabase
-    .from("blogs")
-    .insert([createData])
-    .single();
-  console.log(data, error);
-
+  const id = params.id as string;
+  await supabase.from("blogs").update(updateData).eq("id", id);
   return redirect(`/admin/blogs`);
 };
 
-export default function AdminNewBlog() {
-  const [description, setDescription] = useState("");
+export default function AdminEditBlog() {
+  const blog = useLoaderData<any>();
+  const [description, setDescription] = useState(blog.description || "");
 
   return (
     <AdminLayout current="blog">
@@ -35,7 +42,6 @@ export default function AdminNewBlog() {
           </h1>
         </div>
       </div>
-
       <form method="post">
         <div className="sm:col-span-4">
           <label
@@ -50,6 +56,7 @@ export default function AdminNewBlog() {
               name="title"
               id="title"
               autoComplete="title"
+              defaultValue={blog.title}
               className={`flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm ${"border-gray-300"}`}
             />
           </div>
@@ -61,17 +68,20 @@ export default function AdminNewBlog() {
           name="description"
           value={description}
         />
-        <Editor onData={(data: string) => setDescription(data)} />
+        <Editor
+          initValue={description}
+          onData={(data: string) => setDescription(data)}
+        />
 
         <div className="mt-5 sm:mt-6">
           <button
             type="submit"
             className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
           >
-            Create
+            Update
           </button>
         </div>
-      </form>
+      </form>{" "}
     </AdminLayout>
   );
 }

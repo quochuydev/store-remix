@@ -1,12 +1,9 @@
 /* eslint-disable @next/next/link-passhref */
 /* eslint-disable @next/next/no-img-element */
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "remix";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import AdminLayout from "~/components/admin/Layout";
 import Table from "~/components/Table";
-import { toast } from "react-toastify";
 import { productService } from "~/services";
 import { useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
@@ -23,24 +20,6 @@ export const loader: LoaderFunction = async ({ params }: any) => {
 
 export default function AdminBlogs() {
   const blogs = useLoaderData<any>();
-
-  const schema = useMemo(
-    () =>
-      yup.object().shape({
-        title: yup.string().trim().required(),
-        body: yup.string().trim().required(),
-      }),
-    []
-  );
-
-  const formik = useFormik({
-    initialValues: {
-      title: "",
-      body: "",
-    },
-    validationSchema: schema,
-    onSubmit: async (data) => {},
-  });
 
   return (
     <AdminLayout current="blog">
@@ -64,13 +43,6 @@ export default function AdminBlogs() {
 
       <Table
         columns={[
-          {
-            id: "id",
-            name: "id",
-            render: function Column(data: any) {
-              return <button>button {data._id}</button>;
-            },
-          },
           {
             id: "title",
             name: "title",

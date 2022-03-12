@@ -1,12 +1,15 @@
-import React from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKConfig, CKOnReady } from "./utils";
 
-const Editor = ({ initValue = "", readOnly, onData }) => {
-  const handleChange = (evt, editor) => {
+export default function Editor({
+  initValue = "",
+  readOnly,
+  onData,
+}: any): React.ReactElement {
+  function handleChange(evt: any, editor: any) {
     onData && onData(editor.getData());
-  };
+  }
 
   return (
     <CKEditor
@@ -17,6 +20,4 @@ const Editor = ({ initValue = "", readOnly, onData }) => {
       onChange={handleChange}
     />
   );
-};
-
-export default Editor;
+}

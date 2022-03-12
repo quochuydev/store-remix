@@ -10,9 +10,10 @@ import { supabase } from "~/utils/supabase.server";
 
 export const loader: LoaderFunction = async ({ params }: any) => {
   const { data } = await supabase
-    .from("products")
+    .from("orders")
     .select("*")
     .order("createdAt", { ascending: false });
+  console.log(321321, data);
 
   return data;
 };

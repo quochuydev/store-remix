@@ -1,16 +1,12 @@
 import { useMemo, useEffect } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import AdminLayout from "~/components/admin/Layout";
 import Uploader from "~/components/Uploader";
-import { productService } from "~/services";
-import { useLoaderData, redirect } from "remix";
+import { useLoaderData, redirect, useTransition } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
 
 export const action: ActionFunction = async ({ request, params }: any) => {
   const formData = await request.formData();
-  const id = params.id as string;
 
   const updates = {
     title: formData.get("title"),
@@ -21,6 +17,7 @@ export const action: ActionFunction = async ({ request, params }: any) => {
     // fileUpload: formData.get("file-upload"),
   };
 
+  const id = params.id as string;
   await supabase.from("products").update(updates).eq("id", id);
 
   return redirect(`/admin/products/${id}`);
@@ -38,36 +35,7 @@ export const loader: LoaderFunction = async ({ params }: any) => {
 
 export default function AdminUpdateProduct({}) {
   const product = useLoaderData<any>();
-
-  const schema = useMemo(
-    () =>
-      yup.object().shape({
-        title: yup.string().trim().required(),
-        price: yup.number().min(0).notRequired(),
-        originalPrice: yup.number().min(0).notRequired(),
-        description: yup.string().trim().nullable().notRequired(),
-        image: yup.string().trim().nullable().notRequired(),
-      }),
-    []
-  );
-
-  const formik = useFormik({
-    initialValues: {
-      title: null,
-      price: 0,
-      originalPrice: 0,
-      description: null,
-      image: null,
-    },
-    validationSchema: schema,
-    onSubmit: async (data) => {},
-  });
-
-  useEffect(() => {
-    formik.setValues({
-      ...product,
-    });
-  }, []);
+  const transition = useTransition();
 
   return (
     <AdminLayout current="product">
@@ -75,8 +43,6 @@ export default function AdminUpdateProduct({}) {
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div>
             <div className="space-y-6 sm:space-y-5">
-              {JSON.stringify(formik.errors)}
-
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start">
                 <label
                   htmlFor="first-name"
@@ -90,14 +56,10 @@ export default function AdminUpdateProduct({}) {
                     name="title"
                     id="title"
                     autoComplete="given-name"
+                    value={product.title}
                     className={`max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm rounded-md ${
-                      formik.errors?.title
-                        ? "border-red-300"
-                        : "border-gray-300"
+                      true ? "border-red-300" : "border-gray-300"
                     }`}
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values?.title}
                   />
                 </div>
               </div>
@@ -116,9 +78,7 @@ export default function AdminUpdateProduct({}) {
                     id="price"
                     autoComplete="given-name"
                     className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values?.price}
+                    value={product.price}
                   />
                 </div>
               </div>
@@ -137,9 +97,7 @@ export default function AdminUpdateProduct({}) {
                     id="originalPrice"
                     autoComplete="given-name"
                     className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values?.originalPrice}
+                    value={product.originalPrice}
                   />
                 </div>
               </div>
@@ -156,10 +114,8 @@ export default function AdminUpdateProduct({}) {
                     id="description"
                     name="description"
                     rows={3}
+                    value={product.description}
                     className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
-                    value={formik.values?.description}
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
                   />
                 </div>
 
@@ -172,9 +128,7 @@ export default function AdminUpdateProduct({}) {
                 <div className="mt-1 sm:mt-0 sm:col-span-2">
                   <div
                     className={`max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md ${
-                      formik.errors?.image
-                        ? "border-red-300"
-                        : "border-gray-300"
+                      true ? "border-red-300" : "border-gray-300"
                     } `}
                   >
                     <div className="space-y-1 text-center">
@@ -200,8 +154,8 @@ export default function AdminUpdateProduct({}) {
                           <span>Upload a file</span>
                           <Uploader
                             id="file-upload"
-                            onSuccess={(file) => {
-                              formik.setFieldValue("image", file?.url);
+                            onSuccess={(file: any) => {
+                              // formik.setFieldValue("image", file?.url);
                             }}
                           />
                         </label>
@@ -212,6 +166,7 @@ export default function AdminUpdateProduct({}) {
                       </p>
                     </div>
                   </div>
+                  <img src={product.image} width={200} />
                 </div>
               </div>
             </div>
@@ -228,9 +183,10 @@ export default function AdminUpdateProduct({}) {
             </button>
             <button
               type="submit"
+              disabled={transition.state === "submitting"}
               className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Save
+              Save {transition.state}
             </button>
           </div>
         </div>

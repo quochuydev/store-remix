@@ -74,7 +74,7 @@ export default function Product() {
                     src={product.image}
                     alt={product.title}
                   />
-                  <Link to={`/admin/products/${product._id}`}>
+                  <Link to={`/admin/products/${product.id}`}>
                     <a className="truncate hover:text-gray-600">
                       <span>
                         {product.title}{" "}

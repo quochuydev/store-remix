@@ -1,11 +1,15 @@
 import { useMemo } from "react";
 import type { ActionFunction } from "remix";
-import { redirect, unstable_parseMultipartFormData } from "remix";
+import {
+  json,
+  redirect,
+  unstable_parseMultipartFormData,
+  useActionData,
+  useTransition,
+} from "remix";
 import AdminLayout from "~/components/admin/Layout";
 import Uploader from "~/components/Uploader";
 import { supabase } from "~/utils/supabase.server";
-import { useFormik } from "formik";
-import * as yup from "yup";
 
 export const action: ActionFunction = async ({ request, params }: any) => {
   const uploadHandler = async ({ name, stream, filename }: any) => {
@@ -43,7 +47,7 @@ export const action: ActionFunction = async ({ request, params }: any) => {
     uploadHandler
   );
 
-  console.log("updated", formData.get("file-upload"));
+  console.log("uploaded", formData.get("file-upload"));
 
   const data = {
     title: formData.get("title"),
@@ -67,29 +71,10 @@ export const action: ActionFunction = async ({ request, params }: any) => {
 };
 
 export default function AdminNewProduct() {
-  const schema = useMemo(
-    () =>
-      yup.object().shape({
-        title: yup.string().trim().required(),
-        price: yup.number().min(0).notRequired(),
-        originalPrice: yup.number().min(0).notRequired(),
-        description: yup.string().trim().nullable().notRequired(),
-        image: yup.string().trim().nullable().notRequired(),
-      }),
-    []
-  );
+  const actionData = useActionData();
+  const transition = useTransition();
 
-  const formik = useFormik({
-    initialValues: {
-      title: null,
-      price: 0,
-      originalPrice: 0,
-      description: null,
-      image: null,
-    },
-    validationSchema: schema,
-    onSubmit: async (data) => {},
-  });
+  console.log({ actionData });
 
   return (
     <AdminLayout current="product">
@@ -114,7 +99,11 @@ export default function AdminNewProduct() {
                     name="title"
                     id="title"
                     autoComplete="given-name"
-                    className={`max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm rounded-md ${"border-gray-300"}`}
+                    className={`max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm rounded-md ${
+                      actionData?.errors.title
+                        ? "border-red-300"
+                        : "border-gray-300"
+                    }`}
                   />
                 </div>
               </div>
@@ -227,6 +216,7 @@ export default function AdminNewProduct() {
             </button>
             <button
               type="submit"
+              disabled={transition.state === "submitting"}
               className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Save
