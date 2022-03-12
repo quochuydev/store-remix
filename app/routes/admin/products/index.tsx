@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/link-passhref */
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from "react";
 import { Link } from "remix";
 import AdminLayout from "~/components/admin/Layout";
-import { useLoaderData, redirect } from "remix";
-import type { LoaderFunction, ActionFunction } from "remix";
+import { useLoaderData } from "remix";
+import type { LoaderFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
 
 function classNames(...classes: any) {

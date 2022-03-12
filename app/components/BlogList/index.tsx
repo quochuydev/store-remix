@@ -33,7 +33,7 @@ const blogList = [
   },
 ];
 
-export default function ProductList({ products = [...blogList] }) {
+export default function BlogList({ blogs }: any) {
   return (
     <div className="bg-white">
       <div className="mx-auto p-8">
@@ -42,13 +42,13 @@ export default function ProductList({ products = [...blogList] }) {
         </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {products.map((product: any) => (
-            <div key={product._id} className="group relative">
-              <Link to={`/products/${product._id}`}>
+          {blogs.map((blog: any) => (
+            <div key={blog.id} className="group relative">
+              <Link to={`/blogs/${blog.id}`}>
                 <div className="w-full  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:aspect-none">
                   <img
-                    src={product.thumpUrl}
-                    alt={product.title}
+                    src={blog.thumpUrl}
+                    alt={blog.title}
                     className="w-full  object-center object-cover lg:w-full "
                   />
                 </div>
@@ -56,11 +56,11 @@ export default function ProductList({ products = [...blogList] }) {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-gray-700">
-                    <Link to={`/products/${product._id}`}>
-                      <a>{product.title}</a>
+                    <Link to={`/products/${blog._id}`}>
+                      <a>{blog.title}</a>
                     </Link>
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                  <p className="mt-1 text-sm text-gray-500">{blog.color}</p>
                 </div>
               </div>
             </div>

@@ -3,48 +3,14 @@ import { useLoaderData, json, Link } from "remix";
 import React, { Fragment, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import { MenuIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
-import ProductFilter from "../components/ProductFilter";
-import ProductList from "../components/ProductList";
-import BlogList from "../components/BlogList";
+import ProductFilter from "~/components/ProductFilter";
+import ProductList from "~/components/ProductList";
+import BlogList from "~/components/BlogList";
+import { supabase } from "~/utils/supabase.server";
 
 type IndexData = {
   resources: Array<{ name: string; url: string }>;
   demos: Array<{ name: string; to: string }>;
-};
-
-export let loader: LoaderFunction = () => {
-  let data: IndexData = {
-    resources: [
-      {
-        name: "Remix Docs",
-        url: "https://remix.run/docs",
-      },
-      {
-        name: "React Router Docs",
-        url: "https://reactrouter.com/docs",
-      },
-      {
-        name: "Remix Discord",
-        url: "https://discord.gg/VBePs6d",
-      },
-    ],
-    demos: [
-      {
-        to: "demos/actions",
-        name: "Actions",
-      },
-      {
-        to: "demos/about",
-        name: "Nested Routes, CSS loading/unloading",
-      },
-      {
-        to: "demos/params",
-        name: "URL Params and Error Boundaries",
-      },
-    ],
-  };
-
-  return json(data);
 };
 
 export let meta: MetaFunction = () => {
@@ -158,10 +124,18 @@ const navigation = {
   ],
 };
 
-const products: any = [];
+export let loader: LoaderFunction = async () => {
+  const { data } = await supabase
+    .from<any>("products")
+    .select("*")
+    .order("createdAt", { ascending: false });
+
+  return json({ products: data, blogs: data });
+};
 
 export default function Index() {
   let data = useLoaderData<IndexData>();
+  const { products, blogs } = data;
   const [open, setOpen] = useState(false);
 
   return (
@@ -503,9 +477,9 @@ export default function Index() {
       </header>
 
       {/* body */}
-      <BlogList />
+      <BlogList blogs={blogs} />
       <ProductFilter>
-        <ProductList />
+        <ProductList products={products} />
       </ProductFilter>
       {/*  */}
 
