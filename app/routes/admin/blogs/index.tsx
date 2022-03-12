@@ -8,9 +8,21 @@ import AdminLayout from "~/components/admin/Layout";
 import Table from "~/components/Table";
 import { toast } from "react-toastify";
 import { productService } from "~/services";
+import { useLoaderData } from "remix";
+import type { LoaderFunction } from "remix";
+import { supabase } from "~/utils/supabase.server";
 
-export default function AdminBlogs({ blogs = [] }) {
-  const [isOpen, setIsOpen] = useState(false);
+export const loader: LoaderFunction = async ({ params }: any) => {
+  const { data } = await supabase
+    .from("products")
+    .select("*")
+    .order("createdAt", { ascending: false });
+
+  return data;
+};
+
+export default function AdminBlogs() {
+  const blogs = useLoaderData<any>();
 
   const schema = useMemo(
     () =>
@@ -63,33 +75,33 @@ export default function AdminBlogs({ blogs = [] }) {
           {
             id: "id",
             name: "id",
-            render: function Column(data) {
+            render: function Column(data: any) {
               return <button>button {data._id}</button>;
             },
           },
           {
             id: "title",
             name: "title",
-            render: function Column(data) {
+            render: function Column(data: any) {
               return <p>{data.title}</p>;
             },
           },
           {
             id: "createdAt",
             name: "Created at",
-            render: function Column(data) {
+            render: function Column(data: any) {
               return <>{new Date(data.createdAt).toDateString()}</>;
             },
           },
           {
             id: "publish",
             name: "publish",
-            render: function Column(data) {
+            render: function Column(data: any) {
               return (
                 <>
                   <select
                     onChange={async (event) => {
-                      await productService.update(data._id, {
+                      await productService.update(data.id, {
                         status: event.target.value,
                       });
                       toast("Updated successfully");
@@ -108,10 +120,10 @@ export default function AdminBlogs({ blogs = [] }) {
           {
             id: "action",
             name: "",
-            render: function Column(data) {
+            render: function Column(data: any) {
               return (
                 <>
-                  <Link to={`/admin/blogs/${data._id}`}>
+                  <Link to={`/admin/blogs/${data.id}`}>
                     <a className="text-indigo-600 hover:text-indigo-900">
                       Edit
                     </a>

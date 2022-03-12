@@ -1,10 +1,6 @@
 import { useMemo } from "react";
 import type { ActionFunction } from "remix";
-import {
-  redirect,
-  unstable_parseMultipartFormData,
-  unstable_createFileUploadHandler,
-} from "remix";
+import { redirect, unstable_parseMultipartFormData } from "remix";
 import AdminLayout from "~/components/admin/Layout";
 import Uploader from "~/components/Uploader";
 import { supabase } from "~/utils/supabase.server";
@@ -12,7 +8,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 export const action: ActionFunction = async ({ request, params }: any) => {
-  let uploadHandler = async ({ name, stream, filename }: any) => {
+  const uploadHandler = async ({ name, stream, filename }: any) => {
     console.log("in uploadHandler", name);
 
     if (name !== "file-upload") {
@@ -28,7 +24,7 @@ export const action: ActionFunction = async ({ request, params }: any) => {
 
     const fileName = `${Date.now()}-${filename}`;
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from("images")
       .upload(fileName, buffer);
     if (error) {
@@ -104,7 +100,6 @@ export default function AdminNewProduct() {
 
   return (
     <AdminLayout current="product">
-      {/* <form onSubmit={formik.handleSubmit} className="space-y-8 p-8"> */}
       <form
         method="post"
         encType="multipart/form-data"

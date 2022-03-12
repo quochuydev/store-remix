@@ -4,10 +4,21 @@ import AdminLayout from "~/components/admin/Layout";
 import Table from "~/components/Table";
 import { toast } from "react-toastify";
 import { productService } from "~/services";
+import { useLoaderData } from "remix";
+import type { LoaderFunction } from "remix";
+import { supabase } from "~/utils/supabase.server";
 
-export default function Order({ orders = [] }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [products, setProducts] = useState([]);
+export const loader: LoaderFunction = async ({ params }: any) => {
+  const { data } = await supabase
+    .from("products")
+    .select("*")
+    .order("createdAt", { ascending: false });
+
+  return data;
+};
+
+export default function Order({}) {
+  const orders = useLoaderData<any>();
 
   return (
     <AdminLayout current="order">
@@ -16,17 +27,17 @@ export default function Order({ orders = [] }) {
           {
             id: "id",
             name: "id",
-            render: function Column(data) {
-              return <button>button {data._id}</button>;
+            render: function Column(data: any) {
+              return <button>button {data.id}</button>;
             },
           },
           {
             id: "lineItems",
             name: "Line items",
-            render: function Column(data) {
+            render: function Column(data: any) {
               return (
                 <>
-                  {data.lineItems.map((lineItem, index) => (
+                  {data.lineItems?.map((lineItem: any, index: any) => (
                     <div key={index}>
                       <p>{lineItem.title}</p>
                       <p>{lineItem.price}</p>
@@ -39,7 +50,7 @@ export default function Order({ orders = [] }) {
           {
             id: "createdAt",
             name: "Created at",
-            render: function Column(data) {
+            render: function Column(data: any) {
               return <>{new Date(data.createdAt).toDateString()}</>;
             },
           },
@@ -50,7 +61,7 @@ export default function Order({ orders = [] }) {
           {
             id: "action",
             name: "",
-            render: function Column(data) {
+            render: function Column(data: any) {
               return (
                 <>
                   <a
