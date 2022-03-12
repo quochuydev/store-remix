@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "remix";
 import AdminLayout from "~/components/admin/Layout";
-import { productService } from "~/services";
 import { useLoaderData, redirect } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
