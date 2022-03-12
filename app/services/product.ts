@@ -1,4 +1,4 @@
-export default {
+export const productService = {
   create: (data: any) => {
     return {};
   },

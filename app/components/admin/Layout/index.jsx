@@ -11,7 +11,6 @@ import {
 import { SearchIcon, SelectorIcon } from "@heroicons/react/solid";
 import { ToastContainer } from "react-toastify";
 import { Link } from "remix";
-import "react-toastify/dist/ReactToastify.css";
 
 const navigation = [
   {

@@ -4,19 +4,22 @@ import { useEffect, useState } from "react";
 import { Link } from "remix";
 import AdminLayout from "~/components/admin/Layout";
 import { productService } from "~/services";
+import { useLoaderData, redirect } from "remix";
+import type { LoaderFunction, ActionFunction } from "remix";
+import { supabase } from "~/utils/supabase.server";
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Product() {
-  const [products, setProducts] = useState([]);
+export const loader: LoaderFunction = async ({ params }: any) => {
+  const { data } = await supabase.from<any>("products").select("*");
 
-  useEffect(() => {
-    productService.getList((result) => {
-      setProducts(result?.data || []);
-    });
-  }, []);
+  return data;
+};
+
+export default function Product() {
+  const products = useLoaderData<any>();
 
   return (
     <AdminLayout current="product">

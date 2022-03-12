@@ -10,9 +10,13 @@ import {
 } from "remix";
 import type { LinksFunction } from "remix";
 import styles from "./styles/app.css";
+import toastify from "react-toastify/dist/ReactToastify.css";
 
 export let links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: styles },
+    { rel: "stylesheet", href: toastify },
+  ];
 };
 
 export default function App() {

@@ -5,8 +5,41 @@ import { toast } from "react-toastify";
 import AdminLayout from "~/components/admin/Layout";
 import Uploader from "~/components/Uploader";
 import { productService } from "~/services";
+import { useLoaderData, redirect } from "remix";
+import type { LoaderFunction, ActionFunction } from "remix";
+import { supabase } from "~/utils/supabase.server";
 
-export default function AdminUpdateProduct({ product = {} }) {
+export const action: ActionFunction = async ({ request, params }: any) => {
+  const formData = await request.formData();
+  const id = params.id as string;
+
+  const updates = {
+    title: formData.get("title"),
+    price: formData.get("price") || 0,
+    originalPrice: formData.get("originalPrice") || 0,
+    description: formData.get("description"),
+    image: formData.get("image"),
+    // fileUpload: formData.get("file-upload"),
+  };
+
+  await supabase.from("products").update(updates).eq("id", id);
+
+  return redirect(`/admin/products/${id}`);
+};
+
+export const loader: LoaderFunction = async ({ params }: any) => {
+  const { data } = await supabase
+    .from<any>("products")
+    .select("*")
+    .eq("id", params.id as string)
+    .single();
+
+  return data;
+};
+
+export default function AdminUpdateProduct({}) {
+  const product = useLoaderData<any>();
+
   const schema = useMemo(
     () =>
       yup.object().shape({
@@ -14,7 +47,7 @@ export default function AdminUpdateProduct({ product = {} }) {
         price: yup.number().min(0).notRequired(),
         originalPrice: yup.number().min(0).notRequired(),
         description: yup.string().trim().nullable().notRequired(),
-        image: yup.string().trim().required(),
+        image: yup.string().trim().nullable().notRequired(),
       }),
     []
   );
@@ -48,7 +81,7 @@ export default function AdminUpdateProduct({ product = {} }) {
 
   return (
     <AdminLayout current="product">
-      <form onSubmit={formik.handleSubmit} className="space-y-8 p-8">
+      <form method="post" className="space-y-8 p-8">
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div>
             <div className="space-y-6 sm:space-y-5">

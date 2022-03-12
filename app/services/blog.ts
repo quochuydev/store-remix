@@ -1,4 +1,4 @@
-export default {
+export const blogService = {
   create: (data: any) => {
     return {};
   },
