@@ -1,4 +1,5 @@
 import React from "react";
+import { fileService } from "~/services";
 
 export default function Uploader(props) {
   const { id, onSuccess, onError } = props;
@@ -15,15 +16,7 @@ export default function Uploader(props) {
           const formData = new FormData();
           formData.append("files", file);
 
-          //   const result = await axios({
-          //     method: "post",
-          //     url: `api/files`,
-          //     headers: {
-          //       "Content-Type": "multipart/form-data",
-          //     },
-          //     data: formData,
-          //   });
-
+          const result = await fileService.create(formData);
           console.log(result?.data);
           onSuccess && onSuccess(result?.data);
         } catch (error) {

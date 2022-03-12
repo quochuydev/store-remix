@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import AdminLayout from "~/components/admin/Layout";
 import Uploader from "~/components/Uploader";
+import { productService } from "~/services";
 
 export default function AdminUpdateProduct({ product = {} }) {
   const schema = useMemo(
@@ -31,7 +32,7 @@ export default function AdminUpdateProduct({ product = {} }) {
       console.log(data);
 
       try {
-        // await axios.put(`api/products/${product._id}`, data);
+        await productService.update(product.id, data);
         toast("success");
       } catch (error) {
         toast.error("failed");

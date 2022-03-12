@@ -3,6 +3,7 @@ import { useState } from "react";
 import AdminLayout from "~/components/admin/Layout";
 import Table from "~/components/Table";
 import { toast } from "react-toastify";
+import { productService } from "~/services";
 
 export default function Order({ orders = [] }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -67,11 +68,9 @@ export default function Order({ orders = [] }) {
                   <select
                     onChange={async (event) => {
                       console.log(event.target.value);
-
-                      // await axios.put(`api/orders/${data._id}`, {
-                      //   status: event.target.value,
-                      // });
-
+                      await productService.update(data.id, {
+                        status: event.target.value,
+                      });
                       toast("Updated successfully");
                     }}
                     value={data.status}

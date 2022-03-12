@@ -5,6 +5,7 @@ import * as yup from "yup";
 import AdminLayout from "~/components/admin/Layout";
 import Editor from "~/components/Editor/index.client";
 import { toast } from "react-toastify";
+import { blogService } from "~/services";
 
 export default function AdminEditBlog({ blog = {} }) {
   const schema = useMemo(
@@ -26,7 +27,7 @@ export default function AdminEditBlog({ blog = {} }) {
       console.log(data);
 
       try {
-        // await axios.put(`api/blogs/${blog._id}`, data);
+        await blogService.update(blog.id, data);
         toast("Success");
       } catch (error) {
         toast.error("Failed");

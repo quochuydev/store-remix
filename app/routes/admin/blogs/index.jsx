@@ -7,7 +7,7 @@ import * as yup from "yup";
 import AdminLayout from "~/components/admin/Layout";
 import Table from "~/components/Table";
 import { toast } from "react-toastify";
-import Editor from "~/components/Editor/index.client";
+import { productService } from "~/services";
 
 export default function AdminBlogs({ blogs = [] }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -89,10 +89,9 @@ export default function AdminBlogs({ blogs = [] }) {
                 <>
                   <select
                     onChange={async (event) => {
-                      // await axios.put(`api/blogs/${data._id}`, {
-                      //   status: event.target.value,
-                      // });
-
+                      await productService.update(data._id, {
+                        status: event.target.value,
+                      });
                       toast("Updated successfully");
                     }}
                     value={data.status}

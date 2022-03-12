@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "remix";
 import AdminLayout from "~/components/admin/Layout";
+import { productService } from "~/services";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -12,10 +13,9 @@ export default function Product() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // axios.post("api.admin.product.getList").then((result) => {
-    //   const newProducts = result?.data || [];
-    //   setProducts(newProducts);
-    // });
+    productService.getList((result) => {
+      setProducts(result?.data || []);
+    });
   }, []);
 
   return (
