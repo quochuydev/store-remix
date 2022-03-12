@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { ActionFunction } from "remix";
+import type { ActionFunction, UploadHandler } from "remix";
 import {
   json,
   redirect,
@@ -12,7 +12,11 @@ import Uploader from "~/components/Uploader";
 import { supabase } from "~/utils/supabase.server";
 
 export const action: ActionFunction = async ({ request, params }: any) => {
-  const uploadHandler = async ({ name, stream, filename }: any) => {
+  const uploadHandler: UploadHandler = async ({
+    name,
+    stream,
+    filename,
+  }: any) => {
     console.log("in uploadHandler", name);
 
     if (name !== "file-upload") {
@@ -39,7 +43,7 @@ export const action: ActionFunction = async ({ request, params }: any) => {
       .from("images")
       .getPublicUrl(fileName);
 
-    return publicURL;
+    return publicURL as string;
   };
 
   const formData = await unstable_parseMultipartFormData(

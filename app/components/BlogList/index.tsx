@@ -2,69 +2,101 @@
 /* eslint-disable @next/next/no-img-element */
 import { Link } from "remix";
 
-const blogList = [
-  {
-    id: 1,
-    title: "Basic Tee",
-    thumpUrl:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    body: "Front of men's Basic Tee in black.",
-  },
-  {
-    id: 2,
-    title: "Basic Tee",
-    thumpUrl:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    body: "Front of men's Basic Tee in black.",
-  },
-  {
-    id: 3,
-    title: "Basic Tee",
-    thumpUrl:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    body: "Front of men's Basic Tee in black.",
-  },
-  {
-    id: 4,
-    title: "Basic Tee",
-    thumpUrl:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    body: "Front of men's Basic Tee in black.",
-  },
-];
-
 export default function BlogList({ blogs }: any) {
   return (
-    <div className="bg-white">
-      <div className="mx-auto p-8">
-        <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
-          Blog
-        </h2>
-
-        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {blogs.map((blog: any) => (
-            <div key={blog.id} className="group relative">
-              <Link to={`/blogs/${blog.id}`}>
-                <div className="w-full  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:aspect-none">
+    <div className="relative bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
+      <div className="absolute inset-0">
+        <div className="bg-white h-1/3 sm:h-2/3" />
+      </div>
+      <div className="relative max-w-7xl mx-auto">
+        <div className="text-center">
+          <h2 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">
+            From the blog
+          </h2>
+          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa
+            libero labore natus atque, ducimus sed.
+          </p>
+        </div>
+        <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
+          {blogs.map(
+            (blog: {
+              title: string;
+              description: string;
+              href: string;
+              imageUrl: string;
+              category: {
+                name: string;
+                href: string;
+              };
+              author: {
+                name: string;
+                href: string;
+                imageUrl: string;
+              };
+              date: string;
+              createdAt: string;
+              readingTime: number;
+            }) => (
+              <div
+                key={blog.title}
+                className="flex flex-col rounded-lg shadow-lg overflow-hidden"
+              >
+                <div className="flex-shrink-0">
                   <img
-                    src={blog.thumpUrl}
-                    alt={blog.title}
-                    className="w-full  object-center object-cover lg:w-full "
+                    className="h-48 w-full object-cover"
+                    src={"https://source.unsplash.com/500x400/?man,gentleman"}
+                    alt=""
                   />
                 </div>
-              </Link>
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-gray-700">
-                    <Link to={`/products/${blog._id}`}>
-                      <a>{blog.title}</a>
-                    </Link>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">{blog.color}</p>
+                <div className="flex-1 bg-white p-6 flex flex-col justify-between">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-indigo-600">
+                      <a href={blog.category?.href} className="hover:underline">
+                        {blog.category?.name}
+                      </a>
+                    </p>
+                    <a href={blog.href} className="block mt-2">
+                      <p className="text-xl font-semibold text-gray-900">
+                        {blog.title}
+                      </p>
+                      <p className="mt-3 text-base text-gray-500">
+                        <div
+                          dangerouslySetInnerHTML={{ __html: blog.description }}
+                        />
+                      </p>
+                    </a>
+                  </div>
+                  <div className="mt-6 flex items-center">
+                    <div className="flex-shrink-0">
+                      <a href={"@quochuydev"}>
+                        <span className="sr-only">{"quochuydev"}</span>
+                        <img
+                          className="h-10 w-10 rounded-full"
+                          src={"https://source.unsplash.com/500x400/?blogger"}
+                          alt=""
+                        />
+                      </a>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-gray-900">
+                        <a href={"@quochuydev"} className="hover:underline">
+                          quochuydev
+                        </a>
+                      </p>
+                      <div className="flex space-x-1 text-sm text-gray-500">
+                        <time dateTime={blog.createdAt}>
+                          {new Date(blog.createdAt).toDateString()}
+                        </time>
+                        <span aria-hidden="true">&middot;</span>
+                        <span>50 read</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       </div>
     </div>

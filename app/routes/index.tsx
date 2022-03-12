@@ -125,17 +125,22 @@ const navigation = {
 };
 
 export let loader: LoaderFunction = async () => {
-  const { data } = await supabase
+  const { data: products } = await supabase
     .from<any>("products")
     .select("*")
     .order("createdAt", { ascending: false });
 
-  return json({ products: data, blogs: data });
+  const { data: blogs } = await supabase
+    .from<any>("blogs")
+    .select("*")
+    .order("createdAt", { ascending: false });
+
+  return json({ products, blogs });
 };
 
 export default function Index() {
   let data = useLoaderData<IndexData>();
-  const { products, blogs } = data;
+  const { products, blogs }: any = data;
   const [open, setOpen] = useState(false);
 
   return (

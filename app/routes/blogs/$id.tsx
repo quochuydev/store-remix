@@ -1,22 +1,8 @@
 import { useLoaderData, redirect, useTransition } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 // import type { Word } from "~/models/blog";
-import { setAuthToken, supabase } from "~/utils/supabase.server";
+import { supabase } from "~/utils/supabase.server";
 import { useSupabase } from "~/utils/supabase-client";
-
-export const action: ActionFunction = async ({ request, params }: any) => {
-  const formData = await request.formData();
-  await setAuthToken(request);
-
-  if (formData.get("_method") === "delete") {
-    await supabase
-      .from<any>("blogs")
-      .delete()
-      .eq("id", params.id as string);
-
-    return redirect("/blogs");
-  }
-};
 
 export const loader: LoaderFunction = async ({ params }: any) => {
   const { data } = await supabase
