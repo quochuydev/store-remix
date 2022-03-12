@@ -12,7 +12,10 @@ function classNames(...classes: any) {
 }
 
 export const loader: LoaderFunction = async ({ params }: any) => {
-  const { data } = await supabase.from<any>("products").select("*");
+  const { data } = await supabase
+    .from<any>("products")
+    .select("*")
+    .order("createdAt", { ascending: false });
 
   return data;
 };
@@ -56,7 +59,7 @@ export default function Product() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-100">
-          {products.map((product) => (
+          {products.map((product: any) => (
             <tr key={product._id}>
               <td className="px-6 py-3 max-w-0 whitespace-nowrap text-sm font-medium text-gray-900">
                 <div className="flex items-center space-x-3 lg:pl-2">

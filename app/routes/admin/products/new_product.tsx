@@ -1,6 +1,10 @@
 import { useMemo } from "react";
 import type { ActionFunction } from "remix";
-import { redirect } from "remix";
+import {
+  redirect,
+  unstable_parseMultipartFormData,
+  unstable_createFileUploadHandler,
+} from "remix";
 import AdminLayout from "~/components/admin/Layout";
 import Uploader from "~/components/Uploader";
 import { supabase } from "~/utils/supabase.server";
@@ -8,15 +12,49 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 export const action: ActionFunction = async ({ request, params }: any) => {
-  const formData = await request.formData();
+  let uploadHandler = async ({ name, stream, filename }: any) => {
+    console.log("in uploadHandler", name);
+
+    if (name !== "file-upload") {
+      stream.resume();
+      return;
+    } else {
+      console.log(name, filename);
+    }
+
+    const chunks = [];
+    for await (const chunk of stream) chunks.push(chunk);
+    const buffer = Buffer.concat(chunks);
+
+    const fileName = `${Date.now()}-${filename}`;
+
+    const { data, error } = await supabase.storage
+      .from("images")
+      .upload(fileName, buffer);
+    if (error) {
+      throw error;
+    }
+
+    const { publicURL } = supabase.storage
+      .from("images")
+      .getPublicUrl(fileName);
+
+    return publicURL;
+  };
+
+  const formData = await unstable_parseMultipartFormData(
+    request,
+    uploadHandler
+  );
+
+  console.log("updated", formData.get("file-upload"));
 
   const data = {
     title: formData.get("title"),
     price: formData.get("price") || 0,
     originalPrice: formData.get("originalPrice") || 0,
     description: formData.get("description"),
-    image: formData.get("image"),
-    // fileUpload: formData.get("file-upload"),
+    image: formData.get("file-upload"),
   };
 
   const { data: product, error } = await supabase
@@ -67,7 +105,11 @@ export default function AdminNewProduct() {
   return (
     <AdminLayout current="product">
       {/* <form onSubmit={formik.handleSubmit} className="space-y-8 p-8"> */}
-      <form method="post" className="space-y-8 p-8">
+      <form
+        method="post"
+        encType="multipart/form-data"
+        className="space-y-8 p-8"
+      >
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div>
             <div className="space-y-6 sm:space-y-5">
