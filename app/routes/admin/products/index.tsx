@@ -46,7 +46,7 @@ export default function Product() {
             name: "Tên sản phẩm",
             render: function Column(product: any) {
               return (
-                <div className="whitespace-nowrap text-sm font-medium text-gray-900">
+                <div className="flex items-center whitespace-nowrap text-sm font-medium text-gray-900">
                   <img
                     className="max-w-none h-12 w-12 ring-2 ring-white"
                     src={product.image}
