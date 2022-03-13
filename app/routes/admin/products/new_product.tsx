@@ -3,7 +3,6 @@ import type { ActionFunction, UploadHandler } from "remix";
 import {
   json,
   redirect,
-  unstable_parseMultipartFormData,
   useActionData,
   useTransition,
   useFetcher,
@@ -54,11 +53,7 @@ export default function AdminNewProduct() {
     <AdminLayout current="product">
       <div className="grid grid-cols-3 gap-8">
         <div className="space-y-8 col-span-2">
-          <form
-            method="post"
-            encType="multipart/form-data"
-            className="space-y-8 p-8"
-          >
+          <form method="post" className="space-y-8 p-8">
             <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
               <div>
                 <div className="space-y-6 sm:space-y-5">

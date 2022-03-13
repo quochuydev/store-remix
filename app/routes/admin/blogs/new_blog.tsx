@@ -2,9 +2,10 @@
 import { redirect } from "remix";
 import type { ActionFunction } from "remix";
 import AdminLayout from "~/components/admin/Layout";
-import Editor from "~/components/Editor/Editor.client";
+import Editor from "~/components/Editor/editor.client";
 import { supabase } from "~/utils/supabase.server";
 import { useState } from "react";
+import { ClientOnly } from "remix-utils";
 
 export const action: ActionFunction = async ({ request }: any) => {
   const formData = await request.formData();
@@ -23,7 +24,7 @@ export const action: ActionFunction = async ({ request }: any) => {
   return redirect(`/admin/blogs`);
 };
 
-export default function AdminNewBlog() {
+const AdminNewBlog = () => {
   const [description, setDescription] = useState("");
 
   return (
@@ -61,7 +62,10 @@ export default function AdminNewBlog() {
           name="description"
           value={description}
         />
-        <Editor onData={(data: string) => setDescription(data)} />
+
+        <ClientOnly>
+          <Editor onData={(data: string) => setDescription(data)} />
+        </ClientOnly>
 
         <div className="mt-5 sm:mt-6">
           <button
@@ -74,4 +78,6 @@ export default function AdminNewBlog() {
       </form>
     </AdminLayout>
   );
-}
+};
+
+export default AdminNewBlog;

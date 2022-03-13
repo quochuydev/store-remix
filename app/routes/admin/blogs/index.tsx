@@ -68,9 +68,9 @@ export default function AdminBlogs() {
               return (
                 <>
                   <Link to={`/admin/blogs/${data.id}`}>
-                    <a className="text-indigo-600 hover:text-indigo-900">
+                    <p className="text-indigo-600 hover:text-indigo-900">
                       Edit
-                    </a>
+                    </p>
                   </Link>{" "}
                   <a
                     className="text-red-600 hover:text-red-900"

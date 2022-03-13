@@ -4,7 +4,8 @@ import type { ActionFunction, LoaderFunction } from "remix";
 import AdminLayout from "~/components/admin/Layout";
 import { supabase } from "~/utils/supabase.server";
 import { useState } from "react";
-import Editor from "~/components/Editor/Editor.client";
+import Editor from "~/components/Editor/editor.client";
+import { ClientOnly } from "remix-utils";
 
 export const loader: LoaderFunction = async ({ params }: any) => {
   const { data } = await supabase
@@ -68,10 +69,12 @@ export default function AdminEditBlog() {
           name="description"
           value={description}
         />
-        <Editor
-          initValue={description}
-          onData={(data: string) => setDescription(data)}
-        />
+        <ClientOnly>
+          <Editor
+            initValue={description}
+            onData={(data: string) => setDescription(data)}
+          />
+        </ClientOnly>
 
         <div className="mt-5 sm:mt-6">
           <button

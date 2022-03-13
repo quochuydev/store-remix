@@ -10,7 +10,6 @@ export default function Editor({
   function handleChange(evt: any, editor: any) {
     onData && onData(editor.getData());
   }
-
   return (
     <CKEditor
       editor={ClassicEditor}

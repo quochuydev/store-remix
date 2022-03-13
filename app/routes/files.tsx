@@ -58,6 +58,6 @@ export const action: ActionFunction = async ({ request, params }: any) => {
   return json(data);
 };
 
-// export default function NewFile() {
-//   return <></>;
-// }
+export default function NewFile() {
+  return <></>;
+}
