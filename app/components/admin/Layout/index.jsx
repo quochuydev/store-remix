@@ -61,25 +61,9 @@ const projects = [
   },
   // More projects...
 ];
-const pinnedProjects = projects.filter((project) => project?.pinned);
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
-}
-
-export async function getServerSideProps({ req }) {
-  if (!req.session?.user) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/login",
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
 }
 
 export default function AdminLayout({ children, current = "" }) {
