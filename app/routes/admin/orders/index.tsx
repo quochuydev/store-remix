@@ -13,7 +13,6 @@ export const loader: LoaderFunction = async ({ params }: any) => {
     .from("orders")
     .select("*")
     .order("createdAt", { ascending: false });
-  console.log(321321, data);
 
   return data;
 };

@@ -14,7 +14,6 @@ export const action: ActionFunction = async ({ request, params }: any) => {
     originalPrice: formData.get("originalPrice") || 0,
     description: formData.get("description"),
     image: formData.get("image"),
-    // fileUpload: formData.get("file-upload"),
   };
 
   const id = params.id as string;

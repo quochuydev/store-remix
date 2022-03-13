@@ -27,7 +27,6 @@ export const action: ActionFunction = async ({ request, params }: any) => {
     .from("products")
     .insert([data])
     .single();
-  console.log(product, error);
 
   if (error) {
     return redirect(`/admin/products`);
