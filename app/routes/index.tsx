@@ -1,6 +1,5 @@
 import type { MetaFunction, LoaderFunction } from "remix";
 import { useLoaderData, json, Link } from "remix";
-import { useState } from "react";
 import ProductFilter from "~/components/ProductFilter";
 import ProductList from "~/components/ProductList";
 import BlogList from "~/components/BlogList";
