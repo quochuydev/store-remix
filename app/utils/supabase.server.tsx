@@ -9,7 +9,6 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
-    // a Cookie from `createCookie` or the CookieOptions to create one
     cookie: {
       name: "supabase-session",
       expires: new Date(Date.now() + 3600),

@@ -36,7 +36,7 @@ class CKUploadAdapter {
     data.append("files", file);
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await fileService.create(data);
+        const res: any = await fileService.create(file);
         if (!res) {
           throw new Error();
         }
