@@ -67,6 +67,7 @@ export default function BlogList({ blogs }: any) {
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
                             overflow: "hidden",
+                            height: 200,
                           }}
                         />
                       </p>
