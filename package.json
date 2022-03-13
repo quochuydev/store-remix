@@ -20,6 +20,7 @@
     "@remix-run/vercel": "^1.0.6",
     "@supabase/supabase-js": "^1.31.1",
     "@supabase/ui": "^0.36.4",
+    "axios": "^0.26.1",
     "formik": "^2.2.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

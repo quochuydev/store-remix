@@ -4,7 +4,7 @@ import React, { useState, useMemo } from "react";
 import { Link } from "remix";
 import AdminLayout from "~/components/admin/Layout";
 import Table from "~/components/Table";
-import { productService } from "~/services";
+import { blogService } from "~/services";
 import { useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
@@ -47,7 +47,11 @@ export default function AdminBlogs() {
             id: "title",
             name: "title",
             render: function Column(data: any) {
-              return <p>{data.title}</p>;
+              return (
+                <Link to={`/admin/blogs/${data.id}`}>
+                  <a>{data.title}</a>
+                </Link>
+              );
             },
           },
           {

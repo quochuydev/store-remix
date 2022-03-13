@@ -1,6 +1,8 @@
+import axios from "axios";
+
 export const fileService = {
-  create: (data: any) => {
-    return {};
+  create: async (data: any) => {
+    return axios.post("/files", data);
   },
   update: (id: string, data: any) => {
     return {};

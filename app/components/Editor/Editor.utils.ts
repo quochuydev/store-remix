@@ -1,4 +1,4 @@
-// import { fileService } from "~/services";
+import { fileService } from "~/services";
 
 const config = {
   server: "",
@@ -36,8 +36,7 @@ class CKUploadAdapter {
     data.append("files", file);
     return new Promise(async (resolve, reject) => {
       try {
-        const res: any = null;
-        // const res = await fileService.create(data);
+        const res = await fileService.create(data);
         if (!res) {
           throw new Error();
         }
