@@ -183,6 +183,18 @@ export default function AdminNewProduct() {
                     className={`max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md ${"border-gray-300"} `}
                   >
                     <div className="space-y-1 text-center">
+                      {file && (
+                        <>
+                          {file.name}{" "}
+                          <button
+                            className="bg-indigo-600 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
+                            onClick={() => setFile(null)}
+                          >
+                            X
+                          </button>
+                        </>
+                      )}
+
                       <svg
                         className="mx-auto h-12 w-12 text-gray-400"
                         stroke="currentColor"
@@ -198,36 +210,22 @@ export default function AdminNewProduct() {
                         />
                       </svg>
 
-                      {file ? (
-                        <>
-                          {file.name}{" "}
-                          <button
-                            className="bg-indigo-600 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
-                            onClick={() => setFile(null)}
-                          >
-                            X
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <div className="flex text-sm text-gray-600">
-                            <label
-                              htmlFor="file-upload"
-                              className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                            >
-                              <span>Upload a file</span>
-                              <Uploader
-                                name="file-upload"
-                                onData={(data: any) => setFile(data)}
-                              />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                          </div>
-                          <p className="text-xs text-gray-500">
-                            PNG, JPG, GIF up to 10MB
-                          </p>
-                        </>
-                      )}
+                      <div className="flex text-sm text-gray-600">
+                        <label
+                          htmlFor="file-upload"
+                          className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                        >
+                          <span>Upload a file</span>
+                          <Uploader
+                            name="file-upload"
+                            onData={(data: any) => setFile(data)}
+                          />
+                        </label>
+                        <p className="pl-1">or drag and drop</p>
+                      </div>
+                      <p className="text-xs text-gray-500">
+                        PNG, JPG, GIF up to 10MB
+                      </p>
                     </div>
                   </div>
                 </div>

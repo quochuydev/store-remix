@@ -1,13 +1,14 @@
-import { supabase } from "~/utils/supabase.server";
+import { supabaseClient } from "~/supabase";
+const supabase = supabaseClient;
 
 export const fileService = {
   create: async (file: any) => {
     const generatePromise = new Promise(function (resolve: any) {
-      var reader = new FileReader();
+      const reader = new FileReader();
       reader.readAsArrayBuffer(file);
       reader.onload = function () {
-        var arrayBuffer: any = reader.result;
-        var bytes = new Uint8Array(arrayBuffer);
+        const arrayBuffer: any = reader.result;
+        const bytes = new Uint8Array(arrayBuffer);
         resolve(bytes);
       };
     });
@@ -26,6 +27,8 @@ export const fileService = {
     const { publicURL } = supabase.storage
       .from("images")
       .getPublicUrl(fileName);
+    console.log(publicURL);
+
     return { url: publicURL };
   },
   update: (id: string, data: any) => {

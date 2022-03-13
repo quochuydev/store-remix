@@ -36,13 +36,13 @@ class CKUploadAdapter {
     data.append("files", file);
     return new Promise(async (resolve, reject) => {
       try {
-        const res: any = await fileService.create(file);
-        if (!res) {
+        const result: any = await fileService.create(file);
+        if (!result) {
           throw new Error();
         }
 
-        var resData = res.data;
-        console.log(resData);
+        console.log(result);
+        const resData: any = result.data ? result.data : result;
         resData.default = resData.url;
         resolve(resData);
       } catch (error) {
