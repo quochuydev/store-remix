@@ -7,12 +7,23 @@ import {
   useTransition,
   useFetcher,
   useActionData,
+  json,
 } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
 
 export const action: ActionFunction = async ({ request, params }: any) => {
   const formData = await request.formData();
+
+  if (formData.get("_method") === "delete") {
+    await supabase
+      .from<any>("products")
+      .delete()
+      .eq("id", params.id as string);
+
+    // return redirect(`/admin/products`);
+    return json({ ok: true });
+  }
 
   const updates = {
     title: formData.get("title"),

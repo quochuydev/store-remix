@@ -10,7 +10,7 @@ export default function ProductList({ products }: any) {
           LATEST PRODUCTS
         </h2>
 
-        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8">
           {products.map((product: any) => (
             <div key={product.id} className="group relative">
               <Link to={`/products/${product.id}`}>
@@ -27,14 +27,12 @@ export default function ProductList({ products }: any) {
               </Link>
               <div className="mt-4 flex justify-between">
                 <div>
-                  <h3 className="text-gray-700">
-                    <Link to={`/products/${product.id}`}>
-                      <a>
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {product.title}
-                      </a>
+                  <h1 className="text-gray-700">
+                    <Link className="text-2xl" to={`/products/${product.id}`}>
+                      <span aria-hidden="true" className="absolute inset-0" />
+                      {product.title}
                     </Link>
-                  </h3>
+                  </h1>
                   <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                 </div>
                 <p className="text-md font-medium text-gray-900">

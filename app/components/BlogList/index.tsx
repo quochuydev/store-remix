@@ -20,6 +20,7 @@ export default function BlogList({ blogs }: any) {
         <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
           {blogs.map(
             (blog: {
+              id: number;
               title: string;
               description: string;
               href: string;
@@ -55,7 +56,7 @@ export default function BlogList({ blogs }: any) {
                         {blog.category?.name}
                       </a>
                     </p>
-                    <a href={blog.href} className="block mt-2">
+                    <Link to={`/blogs/${blog.id}`} className="block mt-2">
                       <p className="text-xl font-semibold text-gray-900">
                         {blog.title}
                       </p>
@@ -71,7 +72,7 @@ export default function BlogList({ blogs }: any) {
                           }}
                         />
                       </p>
-                    </a>
+                    </Link>
                   </div>
                   <div className="mt-6 flex items-center">
                     <div className="flex-shrink-0">

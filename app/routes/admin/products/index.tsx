@@ -1,11 +1,30 @@
 /* eslint-disable @next/next/link-passhref */
 /* eslint-disable @next/next/no-img-element */
-import { Link } from "remix";
+import {
+  useLoaderData,
+  useFetcher,
+  json,
+  Link,
+  redirect,
+  useSubmit,
+} from "remix";
+import type { LoaderFunction, ActionFunction } from "remix";
 import AdminLayout from "~/components/admin/Layout";
-import { useLoaderData } from "remix";
-import type { LoaderFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
 import Table from "~/components/Table";
+
+export const action: ActionFunction = async ({ request }: any) => {
+  const formData = await request.formData();
+
+  const productId = formData.get("productId");
+  console.log(productId);
+
+  if (productId) {
+    await supabase.from<any>("products").delete().eq("id", productId);
+  }
+
+  return redirect(`/admin/products`);
+};
 
 export const loader: LoaderFunction = async ({ params }: any) => {
   const { data } = await supabase
@@ -18,6 +37,8 @@ export const loader: LoaderFunction = async ({ params }: any) => {
 
 export default function Product() {
   const products = useLoaderData<any>();
+  const fetcher = useFetcher();
+  const submit = useSubmit();
 
   return (
     <AdminLayout current="product">
@@ -113,12 +134,29 @@ export default function Product() {
                   >
                     Edit
                   </Link>{" "}
-                  <a
-                    className="text-red-600 hover:text-red-900"
-                    onClick={() => {}}
+                  {/* {JSON.stringify(fetcher)} */}
+                  <fetcher.Form
+                    method="get"
+                    onChange={(e) => submit(e.currentTarget)}
                   >
-                    Archive
-                  </a>
+                    <a
+                      className="text-red-600 hover:text-red-900"
+                      onClick={async () => {
+                        const isDeleted = confirm("Are you sure to remove!");
+                        if (isDeleted) {
+                          fetcher.submit(
+                            { _method: "delete" },
+                            {
+                              method: "post",
+                              action: `/admin/products/${product.id}`,
+                            }
+                          );
+                        }
+                      }}
+                    >
+                      Delete
+                    </a>
+                  </fetcher.Form>
                 </div>
               );
             },
