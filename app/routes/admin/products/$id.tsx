@@ -21,7 +21,6 @@ export const action: ActionFunction = async ({ request, params }: any) => {
       .delete()
       .eq("id", params.id as string);
 
-    // return redirect(`/admin/products`);
     return json({ ok: true });
   }
 

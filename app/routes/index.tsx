@@ -46,7 +46,7 @@ export default function Index() {
       <ProductFilter>
         <ProductList products={products} />
       </ProductFilter>
-      <BlogList2 blogs={blogs} />
+      {/* <BlogList2 blogs={blogs} /> */}
       <Footer />
     </div>
   );

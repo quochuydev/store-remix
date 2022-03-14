@@ -742,6 +742,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: table;
 }
 
+.inline-table {
+  display: inline-table;
+}
+
 .flow-root {
   display: flow-root;
 }

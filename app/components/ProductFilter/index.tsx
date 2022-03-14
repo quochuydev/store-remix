@@ -332,7 +332,10 @@ export default function ProductFilter({ children }: any) {
               {/* Product grid */}
               <div className="lg:col-span-3">
                 {/* Replace with your content */}
-                <div className="border-2 border-dashed border-gray-200 rounded-lg h-96 lg:h-full">
+                <div
+                  className="border-2 border-dashed border-gray-200 rounded-lg h-96 lg:h-full"
+                  style={{ display: "inline-table" }}
+                >
                   {children}
                 </div>
                 {/* /End replace */}
