@@ -298,7 +298,7 @@ export default function ProductDetail({ product, after }) {
               </button>
             </form>
 
-            <div className="py-10 lg:pt-6 lg:pb-4 lg:col-start-1 lg:col-span-3 lg:border-gray-200 lg:pr-8">
+            <div className="lg:pt-6 lg:pb-4 lg:col-start-1 lg:col-span-3 lg:border-gray-200 lg:pr-8">
               {/* Description and details */}
               <div>
                 <h3 className="sr-only">Description</h3>
