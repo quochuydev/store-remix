@@ -9,6 +9,7 @@ import BlogList from "~/components/BlogList";
 import BlogList2 from "~/components/BlogList2";
 import Cart from "~/components/Cart";
 import { supabase } from "~/utils/supabase.server";
+import { ToastContainer } from "react-toastify";
 
 const navigation = {
   categories: [],
@@ -120,6 +121,8 @@ export default function Header() {
 
   return (
     <>
+      <ToastContainer />
+
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog
@@ -445,17 +448,18 @@ export default function Header() {
                       setIsOpenCart,
                     }}
                   />
-                  <a onClick={() => setIsOpenCart(true)}>
-                    <a className="group -m-2 p-2 flex items-center">
-                      <ShoppingBagIcon
-                        className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                        {0}
-                      </span>
-                      <span className="sr-only">items in cart, view bag</span>
-                    </a>
+                  <a
+                    onClick={() => setIsOpenCart(true)}
+                    className="group -m-2 p-2 flex items-center"
+                  >
+                    <ShoppingBagIcon
+                      className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
+                      aria-hidden="true"
+                    />
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                      {0}
+                    </span>
+                    <span className="sr-only">items in cart, view bag</span>
                   </a>
                 </div>
               </div>

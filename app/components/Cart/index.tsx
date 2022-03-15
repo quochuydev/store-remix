@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { CartProvider, useCart } from "react-use-cart";
+import { CartProvider, useCart } from "~/packages/react-use-cart";
 
 export default function CartWapper(props: any) {
   return (
@@ -12,7 +12,7 @@ export default function CartWapper(props: any) {
 }
 
 function Cart({ isOpenCart, setIsOpenCart }: any) {
-  const { totalUniqueItems, items } = useCart();
+  const { items, removeItem, updateItemQuantity } = useCart();
 
   return (
     <Transition.Root show={isOpenCart} as={Fragment}>
@@ -86,10 +86,7 @@ function Cart({ isOpenCart, setIsOpenCart }: any) {
                                 <div>
                                   <div className="flex justify-between text-base font-medium text-gray-900">
                                     <h3>
-                                      <a href={product.href}>
-                                        {" "}
-                                        {product.name}{" "}
-                                      </a>
+                                      <a href={product.href}>{product.name} </a>
                                     </h3>
                                     <p className="ml-4">{product.price}</p>
                                   </div>
@@ -99,12 +96,13 @@ function Cart({ isOpenCart, setIsOpenCart }: any) {
                                 </div>
                                 <div className="flex flex-1 items-end justify-between text-sm">
                                   <p className="text-gray-500">
-                                    Qty {product.quantity}
+                                    Quantity {product.quantity}
                                   </p>
 
                                   <div className="flex">
                                     <button
-                                      type="button"
+                                      type="submit"
+                                      onClick={() => removeItem(product.id)}
                                       className="font-medium text-indigo-600 hover:text-indigo-500"
                                     >
                                       Remove

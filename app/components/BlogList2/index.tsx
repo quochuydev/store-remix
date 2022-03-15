@@ -1,3 +1,5 @@
+import { Link } from "remix";
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
@@ -6,9 +8,10 @@ export default function BlogList2({ blogs }: any) {
   return (
     <div className="bg-white pt-4 pb-20 px-4 sm:px-6 lg:pt-4 lg:pb-28 lg:px-8">
       <div className="relative w-full mx-auto divide-y-2 divide-gray-200">
-        <div className="mt-12 grid gap-16 pt-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
+        <div className="mt-4 grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
           {blogs.map(
             (blog: {
+              id: number;
               title: string;
               description: string;
               href: string;
@@ -28,23 +31,21 @@ export default function BlogList2({ blogs }: any) {
               readingTime: number;
             }) => (
               <div key={blog.title}>
-                <div>
-                  <a className="inline-block">
-                    <span
-                      className={classNames(
-                        blog.category?.color,
-                        "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium"
-                      )}
-                    >
-                      {blog.category?.name}
-                    </span>
-                  </a>
-                </div>
-                <a href={blog.href} className="block mt-4">
+                <a className="inline-block">
+                  <span
+                    className={classNames(
+                      blog.category?.color,
+                      "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium"
+                    )}
+                  >
+                    {blog.category?.name}
+                  </span>
+                </a>
+                <Link to={`/blogs/${blog.id}`} className="block mt-4">
                   <p className="text-xl font-semibold text-gray-900">
                     {blog.title}
                   </p>
-                </a>
+                </Link>
                 <div className="mt-3 text-base text-gray-500">
                   <div
                     className="description"
