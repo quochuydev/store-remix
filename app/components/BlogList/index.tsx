@@ -4,7 +4,7 @@ import { Link } from "remix";
 
 export default function BlogList({ blogs }: any) {
   return (
-    <div className="relative bg-gray-50 pt-8 pb-20 px-4 sm:px-6 lg:pt-8 lg:pb-28 lg:px-8">
+    <div className="relative bg-gray-50 pt-8 pb-20 px-4 sm:px-6 lg:pt-8 lg:pb-8 lg:px-8">
       <div className="absolute inset-0">
         <div className="bg-white h-1/3 sm:h-2/3" />
       </div>
@@ -17,7 +17,7 @@ export default function BlogList({ blogs }: any) {
             And your girl friend
           </p>
         </div>
-        <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
+        <div className="mt-8 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
           {blogs.map(
             (blog: {
               id: number;
@@ -60,7 +60,7 @@ export default function BlogList({ blogs }: any) {
                       <p className="text-xl font-semibold text-gray-900">
                         {blog.title}
                       </p>
-                      <p className="mt-3 text-base text-gray-500">
+                      {/* <p className="mt-3 text-base text-gray-500">
                         <div
                           className="description"
                           dangerouslySetInnerHTML={{ __html: blog.description }}
@@ -71,7 +71,7 @@ export default function BlogList({ blogs }: any) {
                             height: 200,
                           }}
                         />
-                      </p>
+                      </p> */}
                     </Link>
                   </div>
                   <div className="mt-6 flex items-center">

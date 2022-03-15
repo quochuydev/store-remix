@@ -818,6 +818,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 3rem;
 }
 
+.h-80 {
+  height: 20rem;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -872,6 +876,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-12 {
   width: 3rem;
+}
+
+.w-80 {
+  width: 20rem;
 }
 
 .min-w-0 {
@@ -2130,6 +2138,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     display: flex;
   }
 
+  .sm\:inline-table {
+    display: inline-table;
+  }
+
   .sm\:grid {
     display: grid;
   }
@@ -2310,12 +2322,20 @@ Ensure the default browser behavior of the `hidden` attribute.
     height: 100%;
   }
 
+  .lg\:h-80 {
+    height: 20rem;
+  }
+
   .lg\:w-full {
     width: 100%;
   }
 
   .lg\:w-64 {
     width: 16rem;
+  }
+
+  .lg\:w-80 {
+    width: 20rem;
   }
 
   .lg\:max-w-none {
@@ -2418,6 +2438,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .lg\:pl-64 {
     padding-left: 16rem;
+  }
+
+  .lg\:pb-12 {
+    padding-bottom: 3rem;
+  }
+
+  .lg\:pb-8 {
+    padding-bottom: 2rem;
   }
 }
 

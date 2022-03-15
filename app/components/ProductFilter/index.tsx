@@ -231,13 +231,6 @@ export default function ProductFilter({ children }: any) {
 
               <button
                 type="button"
-                className="p-2 -m-2 ml-5 sm:ml-7 text-gray-400 hover:text-gray-500"
-              >
-                <span className="sr-only">View grid</span>
-                <ViewGridIcon className="w-5 h-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
                 className="p-2 -m-2 ml-4 sm:ml-6 text-gray-400 hover:text-gray-500 lg:hidden"
                 onClick={() => setMobileFiltersOpen(true)}
               >
@@ -332,10 +325,7 @@ export default function ProductFilter({ children }: any) {
               {/* Product grid */}
               <div className="lg:col-span-3">
                 {/* Replace with your content */}
-                <div
-                  className="border-2 border-dashed border-gray-200 rounded-lg h-96 lg:h-full"
-                  style={{ display: "inline-table" }}
-                >
+                <div className="border-2 border-dashed border-gray-200 rounded-lg h-96 lg:h-full inline-table lg:block">
                   {children}
                 </div>
                 {/* /End replace */}
