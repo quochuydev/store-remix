@@ -139,7 +139,12 @@ function Product({ product, after }) {
           {/* Options */}
           <div className="mt-4 lg:mt-0 lg:row-span-3">
             <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl text-gray-900">{product.price}đ</p>
+            <p className="text-3xl text-gray-900">
+              {product.price}đ
+              <span className="text-sm line-through">
+                {product.originalPrice}đ
+              </span>
+            </p>
 
             {/* Reviews */}
             {/* <div className="mt-6">

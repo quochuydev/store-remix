@@ -12,7 +12,7 @@ export default function CartWapper(props: any) {
 }
 
 function Cart({ isOpenCart, setIsOpenCart }: any) {
-  const { items, removeItem, updateItemQuantity } = useCart();
+  const { items, removeItem, updateItemQuantity, cartTotal } = useCart();
 
   return (
     <Transition.Root show={isOpenCart} as={Fragment}>
@@ -34,9 +34,9 @@ function Cart({ isOpenCart, setIsOpenCart }: any) {
             <Dialog.Overlay className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
-          <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-            {/* {JSON.stringify(items)} */}
+          {/* {JSON.stringify(items)} */}
 
+          <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
             <Transition.Child
               as={Fragment}
               enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -51,8 +51,7 @@ function Cart({ isOpenCart, setIsOpenCart }: any) {
                   <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
                     <div className="flex items-start justify-between">
                       <Dialog.Title className="text-lg font-medium text-gray-900">
-                        {" "}
-                        Shopping cart{" "}
+                        Shopping cart
                       </Dialog.Title>
                       <div className="ml-3 flex h-7 items-center">
                         <button
@@ -86,17 +85,21 @@ function Cart({ isOpenCart, setIsOpenCart }: any) {
                                 <div>
                                   <div className="flex justify-between text-base font-medium text-gray-900">
                                     <h3>
-                                      <a href={product.href}>{product.name} </a>
+                                      <a href={product.href}>{product.title}</a>
                                     </h3>
-                                    <p className="ml-4">{product.price}</p>
+                                    <p className="ml-4">{product.itemTotal}đ</p>
                                   </div>
                                   <p className="mt-1 text-sm text-gray-500">
                                     {product.color}
                                   </p>
                                 </div>
                                 <div className="flex flex-1 items-end justify-between text-sm">
-                                  <p className="text-gray-500">
-                                    Quantity {product.quantity}
+                                  <p>
+                                    <span className="text-gray-500">
+                                      {product.quantity}
+                                    </span>
+                                    {" X "}
+                                    {product.price}đ
                                   </p>
 
                                   <div className="flex">
@@ -119,12 +122,12 @@ function Cart({ isOpenCart, setIsOpenCart }: any) {
 
                   <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-gray-900">
-                      <p>Subtotal</p>
-                      <p>$262.00</p>
+                      <p>Tổng tiền</p>
+                      <p>{cartTotal}</p>
                     </div>
-                    <p className="mt-0.5 text-sm text-gray-500">
+                    {/* <p className="mt-0.5 text-sm text-gray-500">
                       Shipping and taxes calculated at checkout.
-                    </p>
+                    </p> */}
                     <div className="mt-6">
                       <a
                         href="#"
