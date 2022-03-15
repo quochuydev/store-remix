@@ -61,18 +61,26 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductDetail({ product, after }) {
+import { CartProvider, useCart } from "react-use-cart";
+
+export default function ProductWrapper({ product, after }) {
+  return (
+    <CartProvider>
+      <ProductDetail {...{ product, after }} />
+    </CartProvider>
+  );
+}
+
+function ProductDetail({ product, after }) {
   const [selectedColor, setSelectedColor] = useState(product?.colors?.[0]);
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[2]);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
+  const { addItem } = useCart();
 
-  const addToCart = async () => {
+  const addToCart = async (event) => {
     setLoading(true);
-    try {
-    } catch (error) {
-      console.error(error);
-    }
+    addItem(product, 1);
     setLoading(false);
     after();
   };
@@ -85,7 +93,7 @@ export default function ProductDetail({ product, after }) {
             role="list"
             className="mx-auto px-4 flex items-center space-x-2 sm:px-6 lg:px-8"
           >
-            {product.breadcrumbs?.map((breadcrumb) => (
+            {product?.breadcrumbs?.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
                   <a

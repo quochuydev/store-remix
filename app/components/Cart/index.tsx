@@ -1,35 +1,19 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
+import { CartProvider, useCart } from "react-use-cart";
 
-const products = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: "$90.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: "$32.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-];
+export default function CartWapper(props: any) {
+  return (
+    <CartProvider>
+      <Cart {...props} />
+    </CartProvider>
+  );
+}
 
-export default function Example({ isOpenCart, setIsOpenCart }: any) {
+function Cart({ isOpenCart, setIsOpenCart }: any) {
+  const { totalUniqueItems, items } = useCart();
+
   return (
     <Transition.Root show={isOpenCart} as={Fragment}>
       <Dialog
@@ -51,6 +35,8 @@ export default function Example({ isOpenCart, setIsOpenCart }: any) {
           </Transition.Child>
 
           <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+            {/* {JSON.stringify(items)} */}
+
             <Transition.Child
               as={Fragment}
               enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -86,12 +72,12 @@ export default function Example({ isOpenCart, setIsOpenCart }: any) {
                           role="list"
                           className="-my-6 divide-y divide-gray-200"
                         >
-                          {products.map((product) => (
+                          {items.map((product) => (
                             <li key={product.id} className="flex py-6">
                               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                 <img
-                                  src={product.imageSrc}
-                                  alt={product.imageAlt}
+                                  src={product.image}
+                                  alt={product.title}
                                   className="h-full w-full object-cover object-center"
                                 />
                               </div>
