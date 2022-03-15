@@ -106,8 +106,8 @@ export default function ProductFilter({ children }: any) {
                   >
                     {subCategories.map((category) => (
                       <li key={category.name}>
-                        <Link to={category.href}>
-                          <a className="block px-2 py-3">{category.name}</a>
+                        <Link to={category.href} className="block px-2 py-3">
+                          {category.name}
                         </Link>
                       </li>
                     ))}
@@ -255,9 +255,7 @@ export default function ProductFilter({ children }: any) {
                 >
                   {subCategories.map((category) => (
                     <li key={category.name}>
-                      <Link to={category.href}>
-                        <a>{category.name}</a>
-                      </Link>
+                      <Link to={category.href}>{category.name}</Link>
                     </li>
                   ))}
                 </ul>

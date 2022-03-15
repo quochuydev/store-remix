@@ -416,10 +416,12 @@ export default function Header() {
                   ))}
 
                   {navigation.pages.map((page: any) => (
-                    <a key={page.name} href={page.href}>
-                      <a className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
-                        {page.name}
-                      </a>
+                    <a
+                      key={page.name}
+                      href={page.href}
+                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                    >
+                      {page.name}
                     </a>
                   ))}
                 </div>

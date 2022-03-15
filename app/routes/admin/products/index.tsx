@@ -73,15 +73,16 @@ export default function Product() {
                     src={product.image}
                     alt={product.title}
                   />
-                  <Link to={`/admin/products/${product.id}`}>
-                    <a className="truncate hover:text-gray-600">
-                      <span>
-                        {product.title}{" "}
-                        <span className="text-gray-500 font-normal">
-                          in {product.title}
-                        </span>
+                  <Link
+                    to={`/admin/products/${product.id}`}
+                    className="truncate hover:text-gray-600"
+                  >
+                    <span>
+                      {product.title}{" "}
+                      <span className="text-gray-500 font-normal">
+                        in {product.title}
                       </span>
-                    </a>
+                    </span>
                   </Link>
                 </div>
               );
