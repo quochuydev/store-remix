@@ -5,7 +5,7 @@ import { Link } from "remix";
 export default function ProductList({ products }: any) {
   return (
     <div className="bg-white">
-      <div className="mx-auto p-8">
+      <div className="mx-auto p-4">
         <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
           LATEST PRODUCTS
         </h2>
