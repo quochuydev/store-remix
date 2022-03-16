@@ -1,5 +1,5 @@
 import type { MetaFunction, LoaderFunction } from "remix";
-import { useLoaderData, json, Link } from "remix";
+import { useLoaderData, json } from "remix";
 import ProductFilter from "~/components/ProductFilter";
 import ProductList from "~/components/ProductList";
 import BlogList from "~/components/BlogList";

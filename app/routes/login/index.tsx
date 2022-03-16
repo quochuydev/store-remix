@@ -8,7 +8,7 @@ type LoaderData = {
 
 export const action: ActionFunction = async ({ request }) => {
   await authenticator.authenticate("sb", request, {
-    successRedirect: "/private",
+    successRedirect: "/admin",
     failureRedirect: "/login",
   });
 };

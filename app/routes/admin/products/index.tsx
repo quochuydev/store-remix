@@ -12,6 +12,7 @@ import type { LoaderFunction, ActionFunction } from "remix";
 import AdminLayout from "~/components/admin/Layout";
 import { supabase } from "~/utils/supabase.server";
 import Table from "~/components/Table";
+import { supabaseStrategy } from "~/auth.server";
 
 export const action: ActionFunction = async ({ request }: any) => {
   const formData = await request.formData();
@@ -26,7 +27,11 @@ export const action: ActionFunction = async ({ request }: any) => {
   return redirect(`/admin/products`);
 };
 
-export const loader: LoaderFunction = async ({ params }: any) => {
+export const loader: LoaderFunction = async ({ request }: any) => {
+  await supabaseStrategy.checkSession(request, {
+    failureRedirect: "/login",
+  });
+
   const { data } = await supabase
     .from<any>("products")
     .select("*")

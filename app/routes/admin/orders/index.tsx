@@ -7,8 +7,13 @@ import { productService } from "~/services";
 import { useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
+import { supabaseStrategy } from "~/auth.server";
 
-export const loader: LoaderFunction = async ({ params }: any) => {
+export const loader: LoaderFunction = async ({ request }: any) => {
+  await supabaseStrategy.checkSession(request, {
+    failureRedirect: "/login",
+  });
+
   const { data } = await supabase
     .from("orders")
     .select("*")
