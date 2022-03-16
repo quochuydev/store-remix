@@ -60,7 +60,6 @@ export default function AdminUpdateProduct({}) {
     if (fileUpload?.data?.url) {
       setImage(fileUpload?.data?.url);
     }
-    console.log("here");
   }, [fileUpload?.data]);
   return (
     <AdminLayout current="product">
