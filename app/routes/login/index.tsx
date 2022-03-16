@@ -15,7 +15,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   await supabaseStrategy.checkSession(request, {
-    successRedirect: "/private",
+    successRedirect: "/admin",
   });
 
   const session = await sessionStorage.getSession(
