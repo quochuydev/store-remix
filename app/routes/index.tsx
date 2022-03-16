@@ -15,8 +15,8 @@ type IndexData = {
 
 export let meta: MetaFunction = () => {
   return {
-    title: "Remix Starter",
-    description: "Welcome to remix!",
+    title: "Cafe for man",
+    description: "Cafe for man",
   };
 };
 
