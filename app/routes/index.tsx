@@ -1,5 +1,5 @@
 import type { MetaFunction, LoaderFunction } from "remix";
-import { useLoaderData, json, Link } from "remix";
+import { useLoaderData, json } from "remix";
 import ProductFilter from "~/components/ProductFilter";
 import ProductList from "~/components/ProductList";
 import BlogList from "~/components/BlogList";
@@ -15,8 +15,8 @@ type IndexData = {
 
 export let meta: MetaFunction = () => {
   return {
-    title: "Remix Starter",
-    description: "Welcome to remix!",
+    title: "Cafe for man",
+    description: "Cafe for man",
   };
 };
 

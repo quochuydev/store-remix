@@ -8,7 +8,7 @@ export default function BlogList2({ blogs }: any) {
   return (
     <div className="bg-white pt-4 pb-20 px-4 sm:px-6 lg:pt-4 lg:pb-28 lg:px-8">
       <div className="relative w-full mx-auto divide-y-2 divide-gray-200">
-        <div className="mt-4 grid gap-16 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
+        <div className="mt-4 grid gap-4 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
           {blogs.map(
             (blog: {
               id: number;
@@ -46,7 +46,7 @@ export default function BlogList2({ blogs }: any) {
                     {blog.title}
                   </p>
                 </Link>
-                <div className="mt-3 text-base text-gray-500">
+                {/* <div className="mt-3 text-base text-gray-500">
                   <div
                     className="description"
                     dangerouslySetInnerHTML={{ __html: blog.description }}
@@ -57,8 +57,8 @@ export default function BlogList2({ blogs }: any) {
                       height: 350,
                     }}
                   />
-                </div>
-                <div className="mt-6 flex items-center">
+                </div> */}
+                <div className="mt-4 flex items-center">
                   <div className="flex-shrink-0 float-left">
                     <a href={"@quochuydev"}>
                       <span className="sr-only">{"@quochuydev"}</span>

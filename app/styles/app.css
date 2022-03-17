@@ -488,6 +488,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   pointer-events: auto;
 }
 
+.static {
+  position: static;
+}
+
 .fixed {
   position: fixed;
 }

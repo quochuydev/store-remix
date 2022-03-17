@@ -59,7 +59,6 @@ const projects = [
     pinned: true,
     bgColorClass: "bg-pink-600",
   },
-  // More projects...
 ];
 
 function classNames(...classes) {
@@ -240,8 +239,8 @@ export default function AdminLayout({ children, current = "" }) {
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <Link
+                          to={"/logout"}
                           className={classNames(
                             active
                               ? "bg-gray-100 text-gray-900"
@@ -250,7 +249,7 @@ export default function AdminLayout({ children, current = "" }) {
                           )}
                         >
                           Logout
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                   </div>
@@ -449,8 +448,8 @@ export default function AdminLayout({ children, current = "" }) {
                       <div className="py-1">
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="#"
+                            <Link
+                              to={"/logout"}
                               className={classNames(
                                 active
                                   ? "bg-gray-100 text-gray-900"
@@ -459,7 +458,7 @@ export default function AdminLayout({ children, current = "" }) {
                               )}
                             >
                               Logout
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                       </div>
