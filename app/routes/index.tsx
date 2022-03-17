@@ -7,6 +7,7 @@ import BlogList2 from "~/components/BlogList2";
 import Header from "~/components/Header";
 import Footer from "~/components/Footer";
 import { supabase } from "~/utils/supabase.server";
+import { Link } from "remix";
 
 type IndexData = {
   resources: Array<{ name: string; url: string }>;
