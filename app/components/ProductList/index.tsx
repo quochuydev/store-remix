@@ -6,6 +6,26 @@ export default function ProductListWrapper({ products }: any) {
   return <ProductList {...{ products }} />;
 }
 
+function ProductList({ products, cols = 2 }: any) {
+  return (
+    <div className="bg-white">
+      <div className="mx-auto p-4">
+        <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
+          LATEST PRODUCTS
+        </h2>
+
+        <div
+          className={`mt-6 grid xs:grid-cols-1 grid-cols-${cols} gap-y-10 gap-x-6 xl:gap-x-8`}
+        >
+          {products.map((product: any) => (
+            <ProductItem {...{ product }} key={product.id} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ProductItem({ product }: any) {
   return (
     <div key={product.id} className="group relative">
@@ -32,24 +52,6 @@ function ProductItem({ product }: any) {
           {product.price}đ
           <span className="text-sm line-through">{product.originalPrice}đ</span>
         </p>
-      </div>
-    </div>
-  );
-}
-
-function ProductList({ products }: any) {
-  return (
-    <div className="bg-white">
-      <div className="mx-auto p-4">
-        <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">
-          LATEST PRODUCTS
-        </h2>
-
-        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8">
-          {products.map((product: any) => (
-            <ProductItem {...{ product }} key={product.id} />
-          ))}
-        </div>
       </div>
     </div>
   );

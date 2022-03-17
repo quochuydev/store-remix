@@ -54,7 +54,7 @@ export default function BlogList2({ blogs }: any) {
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      height: 200,
+                      height: 350,
                     }}
                   />
                 </div>
