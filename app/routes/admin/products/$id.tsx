@@ -25,6 +25,8 @@ export const action: ActionFunction = async ({ request, params }: any) => {
     return json({ ok: true });
   }
 
+  console.log("categories", formData.get("categories"));
+
   const updates = {
     title: formData.get("title"),
     price: formData.get("price") || 0,
@@ -149,7 +151,7 @@ export default function AdminUpdateProduct({}) {
                       </textarea>
                     </div>
 
-                    <Category />
+                    <Category value={product.categories} name="categories" />
 
                     <input
                       type="text"

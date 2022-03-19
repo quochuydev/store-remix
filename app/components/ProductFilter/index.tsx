@@ -50,7 +50,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductFilter({ children }: any) {
+export default function ProductFilter({ categories, children }: any) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   return (
@@ -104,9 +104,9 @@ export default function ProductFilter({ children }: any) {
                     role="list"
                     className="font-medium text-gray-900 px-2 py-3"
                   >
-                    {subCategories.map((category) => (
-                      <li key={category.name}>
-                        <Link to={category.href} className="block px-2 py-3">
+                    {categories.map((category: any) => (
+                      <li key={category.id}>
+                        <Link to={"/"} className="block px-2 py-3">
                           {category.name}
                         </Link>
                       </li>
@@ -253,9 +253,9 @@ export default function ProductFilter({ children }: any) {
                   role="list"
                   className="text-sm font-medium text-gray-900 space-y-4 pb-6 border-b border-gray-200"
                 >
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <Link to={category.href}>{category.name}</Link>
+                  {categories.map((category: any) => (
+                    <li key={category.id}>
+                      <Link to={"/"}>{category.name}</Link>
                     </li>
                   ))}
                 </ul>

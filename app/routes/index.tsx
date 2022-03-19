@@ -33,18 +33,22 @@ export let loader: LoaderFunction = async () => {
     .order("createdAt", { ascending: false })
     .limit(3);
 
-  return json({ products, blogs });
+  const { data: categories } = await supabase
+    .from<any>("categories")
+    .select("*");
+
+  return json({ products, blogs, categories });
 };
 
 export default function Index() {
   let data = useLoaderData<IndexData>();
-  const { products, blogs }: any = data;
+  const { products, blogs, categories }: any = data;
 
   return (
     <div className="bg-white">
       <Header />
       <BlogList blogs={blogs} />
-      <ProductFilter>
+      <ProductFilter categories={categories}>
         <ProductList products={products} />
       </ProductFilter>
 
