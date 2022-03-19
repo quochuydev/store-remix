@@ -11,6 +11,7 @@ import {
 } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
+import Category from "~/components/Category";
 
 export const action: ActionFunction = async ({ request, params }: any) => {
   const formData = await request.formData();
@@ -147,6 +148,9 @@ export default function AdminUpdateProduct({}) {
                         {product.description}
                       </textarea>
                     </div>
+
+                    <Category />
+
                     <input
                       type="text"
                       className="hidden"
