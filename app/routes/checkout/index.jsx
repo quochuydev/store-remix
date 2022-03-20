@@ -1,20 +1,3 @@
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
 import { Fragment, useState } from "react";
 import {
   Dialog,
@@ -31,6 +14,7 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import { CheckCircleIcon, TrashIcon } from "@heroicons/react/solid";
+import { CartProvider, useCart } from "~/packages/react-use-cart";
 
 const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
 const navigation = {
@@ -173,7 +157,17 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function SingleStepWithOrderSummary() {
+export default function CheckoutWrapper(props) {
+  return (
+    <CartProvider>
+      <Checkout {...props} />
+    </CartProvider>
+  );
+}
+
+function Checkout() {
+  const { items, removeItem, cartTotal } = useCart();
+
   const [open, setOpen] = useState(false);
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(
     deliveryMethods[0]
@@ -623,6 +617,7 @@ export default function SingleStepWithOrderSummary() {
           <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
             <div>
               <div>
+                {/* {JSON.stringify(items)} */}
                 <h2 className="text-lg font-medium text-gray-900">
                   Contact information
                 </h2>
@@ -1025,12 +1020,12 @@ export default function SingleStepWithOrderSummary() {
               <div className="mt-4 bg-white border border-gray-200 rounded-lg shadow-sm">
                 <h3 className="sr-only">Items in your cart</h3>
                 <ul role="list" className="divide-y divide-gray-200">
-                  {products.map((product) => (
+                  {items.map((product) => (
                     <li key={product.id} className="flex py-6 px-4 sm:px-6">
                       <div className="flex-shrink-0">
                         <img
-                          src={product.imageSrc}
-                          alt={product.imageAlt}
+                          src={product.image}
+                          alt={product.title}
                           className="w-20 rounded-md"
                         />
                       </div>
@@ -1053,7 +1048,7 @@ export default function SingleStepWithOrderSummary() {
                               {product.size}
                             </p>
                           </div>
-
+                          {/* 
                           <div className="ml-4 flex-shrink-0 flow-root">
                             <button
                               type="button"
@@ -1065,19 +1060,21 @@ export default function SingleStepWithOrderSummary() {
                                 aria-hidden="true"
                               />
                             </button>
-                          </div>
+                          </div> */}
                         </div>
 
                         <div className="flex-1 pt-2 flex items-end justify-between">
                           <p className="mt-1 text-sm font-medium text-gray-900">
-                            {product.price}
+                            {product.price} X <span>{product.quantity}</span>
                           </p>
 
                           <div className="ml-4">
                             <label htmlFor="quantity" className="sr-only">
                               Quantity
                             </label>
-                            <select
+                            <p>{product.itemTotal}</p>
+                            {/* <select
+                              value={item.quantity}
                               id="quantity"
                               name="quantity"
                               className="rounded-md border border-gray-300 text-base font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -1090,7 +1087,7 @@ export default function SingleStepWithOrderSummary() {
                               <option value={6}>6</option>
                               <option value={7}>7</option>
                               <option value={8}>8</option>
-                            </select>
+                            </select> */}
                           </div>
                         </div>
                       </div>
@@ -1101,21 +1098,21 @@ export default function SingleStepWithOrderSummary() {
                   <div className="flex items-center justify-between">
                     <dt className="text-sm">Subtotal</dt>
                     <dd className="text-sm font-medium text-gray-900">
-                      $64.00
+                      {cartTotal}
                     </dd>
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-sm">Shipping</dt>
-                    <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                    <dd className="text-sm font-medium text-gray-900">0</dd>
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-sm">Taxes</dt>
-                    <dd className="text-sm font-medium text-gray-900">$5.52</dd>
+                    <dd className="text-sm font-medium text-gray-900">0</dd>
                   </div>
                   <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                     <dt className="text-base font-medium">Total</dt>
                     <dd className="text-base font-medium text-gray-900">
-                      $75.52
+                      {cartTotal}
                     </dd>
                   </div>
                 </dl>
