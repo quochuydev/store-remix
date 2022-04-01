@@ -2152,6 +2152,11 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
+intl-parse-accept-language@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/intl-parse-accept-language/-/intl-parse-accept-language-1.0.0.tgz#204d1bc0b13c5baea7775f5eeb95bef2b795675c"
+  integrity sha512-YFMSV91JNBOSjw1cOfw2tup6hDP7mkz+2AUV7W1L1AM6ntgI75qC1ZeFpjPGMrWp+upmBRTX2fJWQ8c7jsUWpA==
+
 ip-regex@^4.0.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-4.3.0.tgz#687275ab0f57fa76978ff8f4dddc8a23d5990db5"
@@ -3603,7 +3608,18 @@ remix-auth@^3.2.1:
     remix-utils "^2.2.0"
     uuid "^8.3.2"
 
-remix-utils@^2.2.0, remix-utils@^2.8.0:
+remix-utils@^2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/remix-utils/-/remix-utils-2.11.1.tgz#a4e6d61c594f166e8bdc78ba089a2e1b55802654"
+  integrity sha512-6Nvb2v/vL4UjHeMO/KbJ73t4jr48qdH1nKAWAuGqCly+3Dcrj8Gt8ITOQ0Di7IL4R5o3kgWchdx520Hcr9ICKg==
+  dependencies:
+    intl-parse-accept-language "^1.0.0"
+    is-ip "^3.1.0"
+    schema-dts "^1.1.0"
+    type-fest "^2.5.2"
+    uuid "^8.3.2"
+
+remix-utils@^2.2.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/remix-utils/-/remix-utils-2.8.0.tgz#b07dc80d4c719bf0e226c24b7addc9fedbbc4ede"
   integrity sha512-XV1hM/6rq0qRL6pwBG8rUeibtBzGHLf4pdp2dgfh7tirTFGYKxqvIueXEseuaKv+4BeHaNcWOMMDc95sOwVqKg==
@@ -3728,6 +3744,11 @@ scheduler@^0.20.2:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
+
+schema-dts@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/schema-dts/-/schema-dts-1.1.0.tgz#33227971076ef1daa33e56a3127a8aae030e81c9"
+  integrity sha512-vdmbs/5ycj4zyKpZIDqTcy+IZi4s7c38RVAYuDmRi7zgxUT8wRWPMLzg0jr7FjdVunYu9yZ00F3+XcZTTFcTOQ==
 
 "semver@2 || 3 || 4 || 5":
   version "5.7.1"

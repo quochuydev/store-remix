@@ -6,7 +6,7 @@ export default function ProductListWrapper({ products }: any) {
   return <ProductList {...{ products }} />;
 }
 
-function ProductList({ products, cols = 2 }: any) {
+function ProductList({ products, cols = 4 }: any) {
   return (
     <div className="bg-white">
       <div className="mx-auto p-4">

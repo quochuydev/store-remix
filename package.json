@@ -27,7 +27,7 @@
     "remix": "^1.0.6",
     "remix-auth": "^3.2.1",
     "remix-auth-supabase": "^3.1.0",
-    "remix-utils": "^2.8.0",
+    "remix-utils": "^2.11.1",
     "tailwindcss": "^3.0.23",
     "yup": "^0.32.11"
   },

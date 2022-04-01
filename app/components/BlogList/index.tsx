@@ -17,7 +17,7 @@ export default function BlogList({ blogs }: any) {
             Work smart play smart
           </p>
         </div>
-        <div className="mt-8 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
+        <div className="mt-8 max-w-lg mx-auto grid gap-5 lg:grid-cols-4 lg:max-w-none">
           {blogs.map(
             (blog: {
               id: number;
