@@ -9,6 +9,7 @@ import {
 } from "remix";
 import AdminLayout from "~/components/admin/Layout";
 import Uploader from "~/components/Uploader";
+import Category from "~/components/Category";
 import { supabase } from "~/utils/supabase.server";
 
 export const action: ActionFunction = async ({ request, params }: any) => {
@@ -130,6 +131,9 @@ export default function AdminNewProduct() {
                         className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
                       />
                     </div>
+
+                    <Category />
+
                     <label
                       htmlFor="cover-photo"
                       className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"

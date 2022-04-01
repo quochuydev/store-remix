@@ -11,6 +11,7 @@ import {
 } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
+import Category from "~/components/Category";
 
 export const action: ActionFunction = async ({ request, params }: any) => {
   const formData = await request.formData();
@@ -23,6 +24,8 @@ export const action: ActionFunction = async ({ request, params }: any) => {
 
     return json({ ok: true });
   }
+
+  console.log("categories", formData.get("categories"));
 
   const updates = {
     title: formData.get("title"),
@@ -147,6 +150,9 @@ export default function AdminUpdateProduct({}) {
                         {product.description}
                       </textarea>
                     </div>
+
+                    <Category value={product.categories} name="categories" />
+
                     <input
                       type="text"
                       className="hidden"

@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { CartProvider, useCart } from "~/packages/react-use-cart";
 
-export default function CartWapper(props: any) {
+export default function CartWrapper(props: any) {
   return (
     <CartProvider>
       <Cart {...props} />
@@ -12,7 +12,7 @@ export default function CartWapper(props: any) {
 }
 
 function Cart({ isOpenCart, setIsOpenCart }: any) {
-  const { items, removeItem, updateItemQuantity, cartTotal } = useCart();
+  const { items, removeItem, cartTotal } = useCart();
 
   return (
     <Transition.Root show={isOpenCart} as={Fragment}>
@@ -53,6 +53,7 @@ function Cart({ isOpenCart, setIsOpenCart }: any) {
                       <Dialog.Title className="text-lg font-medium text-gray-900">
                         Shopping cart
                       </Dialog.Title>
+
                       <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
