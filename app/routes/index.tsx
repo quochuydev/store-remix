@@ -60,13 +60,13 @@ export default function Index() {
         <div
           style={{
             width: "100%",
-            height: 500,
+            height: 800,
             overflow: "hidden",
             marginBottom: 10,
           }}
         >
           <img
-            src={"/banner.png"}
+            src={"/slider.jpg"}
             style={{
               width: "100%",
             }}
@@ -89,12 +89,20 @@ export default function Index() {
         <div className="space-y-8 col-span-1">
           <div
             className="banner banner3 banner-fixed overlay-dark h-100"
-            style={{ backgroundColor: "rgb(37, 36, 42)" }}
+            style={{
+              backgroundColor: "rgb(37, 36, 42)",
+              position: "relative",
+              display: "block",
+            }}
           >
-            <figure>
-              <img src={"/banner.png"} alt="banner" height={350} />
-            </figure>
-            <div className="p-4">
+            <img src={"/banner.png"} alt="banner" height={350} />
+            <div
+              className="p-4"
+              style={{
+                position: "absolute",
+                bottom: 0,
+              }}
+            >
               <h4 className="text-md text-white uppercase">New Collection</h4>
               <h3 className="text-lg text-white font-bold">
                 Find out Jodan trending!
