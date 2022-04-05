@@ -11,6 +11,8 @@ import Cart from "~/components/Cart";
 import { supabase } from "~/utils/supabase.server";
 import { ToastContainer } from "react-toastify";
 
+import { CartProvider, useCart } from "~/packages/react-use-cart";
+
 const navigation = {
   categories: [],
   featured: [],
@@ -115,9 +117,18 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Header() {
+export default function HeaderWrapper(props: any) {
+  return (
+    <CartProvider>
+      <Header {...props} />
+    </CartProvider>
+  );
+}
+
+function Header() {
   const [open, setOpen] = useState(false);
   const [isOpenCart, setIsOpenCart] = useState(false);
+  const { totalItems } = useCart();
 
   return (
     <>
@@ -457,7 +468,7 @@ export default function Header() {
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      {0}
+                      {totalItems}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </a>

@@ -22,26 +22,35 @@ export default function Page() {
   return (
     <div>
       <Header />
-      <div>
-        <h1>
-          {blog.title} | {blog.type}
-        </h1>
-        <div>form State: {transition.state}</div>
-        {(blog.definitions || []).map((definition: any, i: any) => (
-          <p key={i}>
-            <i>{definition}</i>
-          </p>
-        ))}
-        {(blog.sentences || []).map((sentence: any, i: any) => (
-          <p key={i}>{sentence}</p>
-        ))}
-        <p className="mt-3 text-base text-gray-500">
-          <div
-            className="description"
-            dangerouslySetInnerHTML={{ __html: blog.description }}
-          />
-        </p>
+
+      <div className="mx-auto relative max-w-7xl">
+        <div className="grid grid-cols-4 gap-8">
+          <div className="col-span-4">
+            <h1 className="text-4xl font-extrabold text-center">
+              {blog.title}
+            </h1>
+
+            <br />
+
+            {/* <div>form State: {transition.state}</div> */}
+            {(blog.definitions || []).map((definition: any, i: any) => (
+              <p key={i}>
+                <i>{definition}</i>
+              </p>
+            ))}
+            {(blog.sentences || []).map((sentence: any, i: any) => (
+              <p key={i}>{sentence}</p>
+            ))}
+            <p className="mt-3 text-base text-gray-500">
+              <div
+                className="description"
+                dangerouslySetInnerHTML={{ __html: blog.description }}
+              />
+            </p>
+          </div>
+        </div>
       </div>
+
       <Footer />
     </div>
   );

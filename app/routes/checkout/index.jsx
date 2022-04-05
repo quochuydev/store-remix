@@ -110,8 +110,8 @@ const products = [
       "https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg",
     imageAlt: "Front of men's Basic Tee in black.",
   },
-  // More products...
 ];
+
 const deliveryMethods = [
   {
     id: 1,
@@ -121,6 +121,7 @@ const deliveryMethods = [
   },
   { id: 2, title: "Express", turnaround: "2–5 business days", price: "$16.00" },
 ];
+
 const paymentMethods = [
   { id: "credit-card", title: "Credit card" },
   { id: "paypal", title: "PayPal" },
