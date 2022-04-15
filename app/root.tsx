@@ -12,8 +12,6 @@ import {
 import type { LinksFunction } from "remix";
 import styles from "./styles/app.css";
 import toastify from "react-toastify/dist/ReactToastify.css";
-import tiny from "tiny-slider/dist/tiny-slider.css";
-
 import { description as seoDescription, getSeo, getSeoMeta } from "./utils/seo";
 
 let [seoMeta, seoLinks] = getSeo();
@@ -23,7 +21,6 @@ export let links: LinksFunction = () => {
     ...seoLinks,
     { rel: "stylesheet", href: styles },
     { rel: "stylesheet", href: toastify },
-    // { rel: "stylesheet", href: tiny },
   ];
 };
 

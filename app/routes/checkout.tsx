@@ -1,11 +1,5 @@
 import { Fragment, useState } from "react";
-import {
-  Dialog,
-  Popover,
-  RadioGroup,
-  Tab,
-  Transition,
-} from "@headlessui/react";
+import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   MenuIcon,
   QuestionMarkCircleIcon,
@@ -13,8 +7,9 @@ import {
   ShoppingBagIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { CheckCircleIcon, TrashIcon } from "@heroicons/react/solid";
 import { CartProvider, useCart } from "~/packages/react-use-cart";
+import { ActionFunction, json, redirect } from "remix";
+import { supabase } from "~/utils/supabase.server";
 
 const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
 const navigation = {
@@ -98,35 +93,7 @@ const navigation = {
     { name: "Stores", href: "#" },
   ],
 };
-const products = [
-  {
-    id: 1,
-    title: "Basic Tee",
-    href: "#",
-    price: "$32.00",
-    color: "Black",
-    size: "Large",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
-];
 
-const deliveryMethods = [
-  {
-    id: 1,
-    title: "Standard",
-    turnaround: "4–10 business days",
-    price: "$5.00",
-  },
-  { id: 2, title: "Express", turnaround: "2–5 business days", price: "$16.00" },
-];
-
-const paymentMethods = [
-  { id: "credit-card", title: "Credit card" },
-  { id: "paypal", title: "PayPal" },
-  { id: "etransfer", title: "eTransfer" },
-];
 const footerNavigation = {
   products: [
     { name: "Bags", href: "#" },
@@ -154,11 +121,38 @@ const footerNavigation = {
   ],
 };
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function CheckoutWrapper(props) {
+export const action: ActionFunction = async ({ request }: any) => {
+  const formData = await request.formData();
+
+  const orderItems = JSON.parse(formData.get("orderItems")) || [];
+
+  const { data: order } = await supabase.from("orders").insert([{}]).single();
+  console.log(order);
+
+  const createData = orderItems.map((e: any) => ({
+    productId: e.productId,
+    price: e.price,
+    quantity: e.quantity,
+    totalPrice: e.itemTotal,
+    orderId: order.id,
+  }));
+
+  console.log(createData);
+
+  const { data, error } = await supabase
+    .from("orderItems")
+    .insert(createData)
+    .single();
+  console.log(data, error);
+
+  return redirect("/thankyou");
+};
+
+export default function CheckoutWrapper(props: any) {
   return (
     <CartProvider>
       <Checkout {...props} />
@@ -168,11 +162,7 @@ export default function CheckoutWrapper(props) {
 
 function Checkout() {
   const { items, cartTotal } = useCart();
-
   const [open, setOpen] = useState(false);
-  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(
-    deliveryMethods[0]
-  );
 
   return (
     <div className="bg-gray-50">
@@ -311,63 +301,16 @@ function Checkout() {
 
               <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                 {/* Currency selector */}
-                <form>
-                  <div className="inline-block">
-                    <label htmlFor="mobile-currency" className="sr-only">
-                      Currency
-                    </label>
-                    <div className="-ml-2 group relative border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
-                      <select
-                        id="mobile-currency"
-                        name="currency"
-                        className="bg-none border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-gray-700 group-hover:text-gray-800 focus:outline-none focus:ring-0 focus:border-transparent"
-                      >
-                        {currencies.map((currency) => (
-                          <option key={currency}>{currency}</option>
-                        ))}
-                      </select>
-                      <div className="absolute right-0 inset-y-0 flex items-center pointer-events-none">
-                        <svg
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 20 20"
-                          className="w-5 h-5 text-gray-500"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="1.5"
-                            d="M6 8l4 4 4-4"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </Transition.Child>
-        </Dialog>
-      </Transition.Root>
 
-      <header className="relative">
-        <nav aria-label="Top">
-          {/* Top navigation */}
-          <div className="bg-gray-900">
-            <div className="max-w-7xl mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
-              {/* Currency selector */}
-              <form>
-                <div>
-                  <label htmlFor="desktop-currency" className="sr-only">
+                <div className="inline-block">
+                  <label htmlFor="mobile-currency" className="sr-only">
                     Currency
                   </label>
-                  <div className="-ml-2 group relative bg-gray-900 border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
+                  <div className="-ml-2 group relative border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
                     <select
-                      id="desktop-currency"
+                      id="mobile-currency"
                       name="currency"
-                      className="bg-none bg-gray-900 border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-white group-hover:text-gray-100 focus:outline-none focus:ring-0 focus:border-transparent"
+                      className="bg-none border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-gray-700 group-hover:text-gray-800 focus:outline-none focus:ring-0 focus:border-transparent"
                     >
                       {currencies.map((currency) => (
                         <option key={currency}>{currency}</option>
@@ -379,7 +322,7 @@ function Checkout() {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 20 20"
-                        className="w-5 h-5 text-gray-300"
+                        className="w-5 h-5 text-gray-500"
                       >
                         <path
                           stroke="currentColor"
@@ -392,7 +335,52 @@ function Checkout() {
                     </div>
                   </div>
                 </div>
-              </form>
+              </div>
+            </div>
+          </Transition.Child>
+        </Dialog>
+      </Transition.Root>
+
+      <header className="relative">
+        <nav aria-label="Top">
+          {/* Top navigation */}
+          <div className="bg-gray-900">
+            <div className="max-w-7xl mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
+              {/* Currency selector */}
+
+              <div>
+                <label htmlFor="desktop-currency" className="sr-only">
+                  Currency
+                </label>
+                <div className="-ml-2 group relative bg-gray-900 border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
+                  <select
+                    id="desktop-currency"
+                    name="currency"
+                    className="bg-none bg-gray-900 border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-white group-hover:text-gray-100 focus:outline-none focus:ring-0 focus:border-transparent"
+                  >
+                    {currencies.map((currency) => (
+                      <option key={currency}>{currency}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-0 inset-y-0 flex items-center pointer-events-none">
+                    <svg
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 20"
+                      className="w-5 h-5 text-gray-300"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M6 8l4 4 4-4"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
 
               <div className="flex items-center space-x-6">
                 <a
@@ -615,10 +603,12 @@ function Checkout() {
         <div className="max-w-2xl mx-auto lg:max-w-none">
           <h1 className="sr-only">Checkout</h1>
 
-          <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+          <form
+            className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
+            method="post"
+          >
             <div>
               <div>
-                {/* {JSON.stringify(items)} */}
                 <h2 className="text-lg font-medium text-gray-900">
                   Contact information
                 </h2>
@@ -892,21 +882,6 @@ function Checkout() {
                               Quantity
                             </label>
                             <p>{product.itemTotal}</p>
-                            {/* <select
-                              value={item.quantity}
-                              id="quantity"
-                              name="quantity"
-                              className="rounded-md border border-gray-300 text-base font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            >
-                              <option value={1}>1</option>
-                              <option value={2}>2</option>
-                              <option value={3}>3</option>
-                              <option value={4}>4</option>
-                              <option value={5}>5</option>
-                              <option value={6}>6</option>
-                              <option value={7}>7</option>
-                              <option value={8}>8</option>
-                            </select> */}
                           </div>
                         </div>
                       </div>
@@ -935,6 +910,7 @@ function Checkout() {
                     </dd>
                   </div>
                 </dl>
+                <input value={JSON.stringify(items)} name="orderItems" />
 
                 <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                   <button

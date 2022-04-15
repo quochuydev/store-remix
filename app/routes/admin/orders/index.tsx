@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
 import AdminLayout from "~/components/admin/Layout";
 import Table from "~/components/Table";
 import { toast } from "react-toastify";
@@ -14,12 +13,24 @@ export const loader: LoaderFunction = async ({ request }: any) => {
     failureRedirect: "/login",
   });
 
-  const { data } = await supabase
+  const { data: orders } = await supabase
     .from("orders")
     .select("*")
     .order("createdAt", { ascending: false });
+  console.log(orders);
 
-  return data;
+  const { data: orderItems } = await supabase
+    .from("orderItems")
+    .select("*")
+    .filter("orderId", "in", `(${(orders || []).map((e) => e.id)})`);
+  console.log(orderItems);
+
+  const result = orders?.map((order) => ({
+    ...order,
+    lineItems: orderItems?.find((e) => e.orderId === order.id),
+  }));
+
+  return result;
 };
 
 export default function Order({}) {
@@ -27,6 +38,8 @@ export default function Order({}) {
 
   return (
     <AdminLayout current="order">
+      {JSON.stringify(orders)}
+
       <Table
         columns={[
           {
@@ -46,6 +59,7 @@ export default function Order({}) {
                     <div key={index}>
                       <p>{lineItem.title}</p>
                       <p>{lineItem.price}</p>
+                      <p>{lineItem.quantity}</p>
                     </div>
                   ))}
                 </>
