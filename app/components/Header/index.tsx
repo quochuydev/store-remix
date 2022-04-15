@@ -11,7 +11,7 @@ import Cart from "~/components/Cart";
 import { supabase } from "~/utils/supabase.server";
 import { ToastContainer } from "react-toastify";
 
-import { CartProvider, useCart } from "~/packages/react-use-cart";
+import { useCart } from "~/packages/react-use-cart";
 
 const navigation = {
   categories: [],
@@ -119,9 +119,9 @@ function classNames(...classes: any) {
 
 export default function HeaderWrapper(props: any) {
   return (
-    <CartProvider>
+    <>
       <Header {...props} />
-    </CartProvider>
+    </>
   );
 }
 

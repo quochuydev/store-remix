@@ -34,6 +34,10 @@ const uploadHandler: UploadHandler = async ({
   const { publicURL } = supabase.storage.from("images").getPublicUrl(fileName);
   console.log(publicURL);
 
+  if (!publicURL) {
+    throw { message: "storage failed" };
+  }
+
   return publicURL as string;
 };
 
@@ -44,6 +48,10 @@ export const action: ActionFunction = async ({ request, params }: any) => {
   );
 
   console.log("uploaded", formData.get("file-upload"));
+
+  if (!formData.get("file-upload")) {
+    throw { message: "storage failed" };
+  }
 
   const createData = {
     url: formData.get("file-upload"),

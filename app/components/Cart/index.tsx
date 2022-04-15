@@ -1,17 +1,9 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { CartProvider, useCart } from "~/packages/react-use-cart";
+import { useCart } from "~/packages/react-use-cart";
 
-export default function CartWrapper(props: any) {
-  return (
-    <CartProvider>
-      <Cart {...props} />
-    </CartProvider>
-  );
-}
-
-function Cart({ isOpenCart, setIsOpenCart }: any) {
+export default function Cart({ isOpenCart, setIsOpenCart }: any) {
   const { items, removeItem, cartTotal } = useCart();
 
   return (

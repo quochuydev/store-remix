@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { StarIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
-import { CartProvider, useCart } from "~/packages/react-use-cart";
+import { useCart } from "~/packages/react-use-cart";
 
 const productDetail = {
   name: "Basic Tee 6-Pack",
@@ -62,11 +62,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductWrapper({ product, after }) {
+export default function ProductWrapper(props) {
   return (
-    <CartProvider>
-      <Product {...{ product, after }} />
-    </CartProvider>
+    <>
+      <Product {...props} />
+    </>
   );
 }
 
@@ -78,7 +78,6 @@ function Product({ product, after }) {
   const { addItem } = useCart();
 
   const addToCart = async (event) => {
-    // event.preventDefault();
     setLoading(true);
     addItem(product, 1);
     setLoading(false);
@@ -302,7 +301,7 @@ function Product({ product, after }) {
                 </div>
               )}
               <button
-                type="submit"
+                type="button"
                 onClick={addToCart}
                 disabled={loading}
                 className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

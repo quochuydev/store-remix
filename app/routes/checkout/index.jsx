@@ -167,7 +167,7 @@ export default function CheckoutWrapper(props) {
 }
 
 function Checkout() {
-  const { items, removeItem, cartTotal } = useCart();
+  const { items, cartTotal } = useCart();
 
   const [open, setOpen] = useState(false);
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(
