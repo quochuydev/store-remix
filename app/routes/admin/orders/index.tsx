@@ -44,7 +44,7 @@ export default function Order({}) {
             id: "id",
             name: "id",
             render: function Column(data: any) {
-              return <button>button {data.id}</button>;
+              return <button>{data.id}</button>;
             },
           },
           {
