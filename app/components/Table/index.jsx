@@ -16,6 +16,7 @@ export default function TableComponent({ columns = [], rows = [] }) {
                 "px-4 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                 column.className ? column.className : ""
               )}
+              style={column.style || {}}
             >
               <span className="lg:pl-2">{column.name}</span>
             </th>

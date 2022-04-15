@@ -134,7 +134,7 @@ export const action: ActionFunction = async ({ request }: any) => {
   console.log(order);
 
   const createData = orderItems.map((e: any) => ({
-    productId: e.productId,
+    productId: e.id,
     price: e.price,
     quantity: e.quantity,
     totalPrice: e.itemTotal,
@@ -145,8 +145,7 @@ export const action: ActionFunction = async ({ request }: any) => {
 
   const { data, error } = await supabase
     .from("orderItems")
-    .insert(createData)
-    .single();
+    .insert(createData as any[]);
   console.log(data, error);
 
   return redirect("/thankyou");

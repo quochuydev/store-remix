@@ -27,7 +27,7 @@ export const loader: LoaderFunction = async ({ request }: any) => {
 
   const result = orders?.map((order) => ({
     ...order,
-    lineItems: orderItems?.find((e) => e.orderId === order.id),
+    lineItems: orderItems?.filter((e) => e.orderId === order.id),
   }));
 
   return result;
@@ -38,8 +38,6 @@ export default function Order({}) {
 
   return (
     <AdminLayout current="order">
-      {JSON.stringify(orders)}
-
       <Table
         columns={[
           {
@@ -57,9 +55,12 @@ export default function Order({}) {
                 <>
                   {data.lineItems?.map((lineItem: any, index: any) => (
                     <div key={index}>
-                      <p>{lineItem.title}</p>
-                      <p>{lineItem.price}</p>
-                      <p>{lineItem.quantity}</p>
+                      <p>
+                        <b>{lineItem.title}</b>
+                      </p>
+                      <p>
+                        {lineItem.price} x {lineItem.quantity}
+                      </p>
                     </div>
                   ))}
                 </>
@@ -67,15 +68,15 @@ export default function Order({}) {
             },
           },
           {
+            id: "amount",
+            name: "amount",
+          },
+          {
             id: "createdAt",
             name: "Created at",
             render: function Column(data: any) {
               return <>{new Date(data.createdAt).toDateString()}</>;
             },
-          },
-          {
-            id: "total",
-            name: "total",
           },
           {
             id: "action",
@@ -104,7 +105,7 @@ export default function Order({}) {
                       toast("Updated successfully");
                     }}
                     value={data.status}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
                     <option value={"new"}>New</option>
                     <option value={"in-progress"}>In-progress</option>
