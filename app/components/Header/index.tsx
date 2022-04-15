@@ -1,16 +1,9 @@
-import type { MetaFunction, LoaderFunction } from "remix";
-import { useLoaderData, json, Link } from "remix";
+import { Link } from "remix";
 import React, { Fragment, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import { MenuIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
-import ProductFilter from "~/components/ProductFilter";
-import ProductList from "~/components/ProductList";
-import BlogList from "~/components/BlogList";
-import BlogList2 from "~/components/BlogList2";
 import Cart from "~/components/Cart";
-import { supabase } from "~/utils/supabase.server";
 import { ToastContainer } from "react-toastify";
-
 import { useCart } from "~/packages/react-use-cart";
 
 const navigation = {
@@ -118,11 +111,7 @@ function classNames(...classes: any) {
 }
 
 export default function HeaderWrapper(props: any) {
-  return (
-    <>
-      <Header {...props} />
-    </>
-  );
+  return <Header {...props} />;
 }
 
 function Header() {

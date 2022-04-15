@@ -10,6 +10,7 @@ import Footer from "~/components/Footer";
 import { supabase } from "~/utils/supabase.server";
 import { Link } from "remix";
 import { ClientOnly } from "remix-utils";
+import { CartProvider } from "~/packages/react-use-cart";
 
 type IndexData = {
   resources: Array<{ name: string; url: string }>;
@@ -42,7 +43,15 @@ export let loader: LoaderFunction = async () => {
   return json({ products, blogs, categories });
 };
 
-export default function Index() {
+export default function HomeWrapper() {
+  return (
+    <CartProvider>
+      <Home />
+    </CartProvider>
+  );
+}
+
+function Home() {
   let data = useLoaderData<IndexData>();
   const { products, blogs, categories }: any = data;
 
