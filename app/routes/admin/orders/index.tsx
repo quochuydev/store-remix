@@ -3,7 +3,7 @@ import AdminLayout from "~/components/admin/Layout";
 import Table from "~/components/Table";
 import { toast } from "react-toastify";
 import { orderService } from "~/services";
-import { useLoaderData, Form, useSubmit } from "remix";
+import { useLoaderData, Form, useSubmit, useTransition } from "remix";
 import type { LoaderFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
 import { supabaseStrategy } from "~/auth.server";
@@ -36,6 +36,7 @@ export const loader: LoaderFunction = async ({ request }: any) => {
 export default function Order({}) {
   const submit = useSubmit();
   const orders = useLoaderData<any>();
+  const transition = useTransition();
 
   return (
     <AdminLayout current="order">
@@ -85,6 +86,7 @@ export default function Order({}) {
             render: function Column(data: any) {
               return (
                 <Form method="get" onChange={(e) => submit(e.currentTarget)}>
+                  {/* {transition.state} */}
                   <a
                     className="text-indigo-600 hover:text-indigo-900"
                     onClick={() => {}}
