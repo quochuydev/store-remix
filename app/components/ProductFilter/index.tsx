@@ -50,7 +50,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductFilter({ categories, children }: any) {
+export default function ProductFilter({ categories = [], children }: any) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   return (
