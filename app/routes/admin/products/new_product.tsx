@@ -132,7 +132,15 @@ export default function AdminNewProduct() {
                       />
                     </div>
 
-                    <Category />
+                    <div>
+                      <label
+                        htmlFor="category"
+                        className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                      >
+                        Category
+                      </label>
+                      <Category name="category" />
+                    </div>
 
                     <label
                       htmlFor="cover-photo"

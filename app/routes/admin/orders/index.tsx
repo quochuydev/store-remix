@@ -87,18 +87,18 @@ export default function Order({}) {
               return (
                 <Form method="get" onChange={(e) => submit(e.currentTarget)}>
                   {/* {transition.state} */}
-                  <a
+                  {/* <a
                     className="text-indigo-600 hover:text-indigo-900"
                     onClick={() => {}}
                   >
                     Edit
-                  </a>{" "}
-                  <a
+                  </a>{" "} */}
+                  {/* <a
                     className="text-red-600 hover:text-red-900"
                     onClick={() => {}}
                   >
                     Archive
-                  </a>
+                  </a> */}
                   <select
                     onChange={async (event) => {
                       console.log(event.target.value);

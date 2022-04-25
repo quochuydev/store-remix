@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabaseClient as supabase } from "~/supabase";
+import Creatable from "react-select/creatable";
 
 export default function Category({ name = "", value = "", onData }: any) {
   const [categories, setCategories] = useState<any>([]);
@@ -10,7 +11,7 @@ export default function Category({ name = "", value = "", onData }: any) {
     setCategories(data);
   }, []);
 
-  const createCategory = useCallback(async (data) => {
+  const createCategory = useCallback(async (data: { name: string }) => {
     if (!data.name) {
       return;
     }
@@ -32,38 +33,36 @@ export default function Category({ name = "", value = "", onData }: any) {
     getCategories();
   }, []);
 
+  useEffect(() => {
+    console.log(value, categories);
+    const initValue = categories.find((e: any) => e?.id === Number(value));
+    if (initValue) {
+      setCategory(initValue);
+    }
+  }, [categories]);
+
   return (
-    <div>
-      <input
-        type="text"
-        value={category?.name}
-        onChange={(e) => setCategory({ name: e.target.value })}
-        className={`max-w-lg block w-full shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-500 rounded-md`}
-      />
-      <button type="button" onClick={() => createCategory(category)}>
-        +
-      </button>
-      <select
+    <>
+      {/* {JSON.stringify(category)} */}
+      <Creatable
         name={name}
-        id={name}
-        value={value}
-        onChange={(event) => {
-          setCategory(
-            categories.find((e: any) => e?.id === Number(event.target.value))
-          );
-          onData && onData(event.target.value);
+        options={categories.map((e: any) => ({
+          id: e.id,
+          label: e.name,
+        }))}
+        onCreateOption={(value) => {
+          console.log(value);
+          createCategory({ name: value });
         }}
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      >
-        <option key={"none"} value={""}>
-          No select
-        </option>
-        {categories.map((category: any, index: number) => (
-          <option key={index} value={category.id}>
-            {category.name}
-          </option>
-        ))}
-      </select>
-    </div>
+        value={{ value: category?.id || null, label: category?.name || "" }}
+        onChange={(e: any) => {
+          console.log(e);
+          setCategory(
+            categories.find((item: any) => item?.id === Number(e.id))
+          );
+          onData && onData(e.id);
+        }}
+      />
+    </>
   );
 }

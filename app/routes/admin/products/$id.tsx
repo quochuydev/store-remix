@@ -33,6 +33,7 @@ export const action: ActionFunction = async ({ request, params }: any) => {
     originalPrice: formData.get("originalPrice") || 0,
     description: formData.get("description"),
     image: formData.get("image"),
+    category: formData.get("category"),
   };
 
   const id = params.id as string;
@@ -66,6 +67,7 @@ export default function AdminUpdateProduct({}) {
   }, [fileUpload?.data]);
   return (
     <AdminLayout current="product">
+      {/* {JSON.stringify(product)} */}
       <div className="grid grid-cols-3 gap-8">
         <div className="space-y-8 col-span-2">
           <form method="post" className="space-y-8 p-8">
@@ -85,7 +87,7 @@ export default function AdminUpdateProduct({}) {
                         name="title"
                         id="title"
                         autoComplete="given-name"
-                        value={product.title}
+                        defaultValue={product.title}
                         className={`max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm rounded-md ${
                           actionData?.errors.title
                             ? "border-red-300"
@@ -151,7 +153,15 @@ export default function AdminUpdateProduct({}) {
                       </textarea>
                     </div>
 
-                    <Category value={product.categories} name="categories" />
+                    <div>
+                      <label
+                        htmlFor="category"
+                        className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                      >
+                        Category
+                      </label>
+                      <Category value={product.category} name="category" />
+                    </div>
 
                     <input
                       type="text"
