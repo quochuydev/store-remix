@@ -130,10 +130,37 @@ export const action: ActionFunction = async ({ request }: any) => {
 
   const orderItems = JSON.parse(formData.get("orderItems")) || [];
 
-  const { data: order } = await supabase.from("orders").insert([{}]).single();
-  console.log(order);
+  const customerData = {
+    currency: formData.get("currency"),
+    email: formData.get("email"),
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    company: formData.get("company"),
+    address: formData.get("address"),
+    apartment: formData.get("apartment"),
+    city: formData.get("city"),
+    country: formData.get("country"),
+    province: formData.get("province"),
+    postalCode: formData.get("postalCode"),
+    phoneNumber: formData.get("phoneNumber"),
+  };
 
-  const createData = orderItems.map((e: any) => ({
+  const { data: order, error: orderError } = await supabase
+    .from("orders")
+    .insert([
+      {
+        customer: customerData,
+        amount: orderItems.reduce(
+          (a: any & { itemTotal: number }, b: any & { itemTotal: number }) =>
+            Number(a.itemTotal || 0) + Number(b.itemTotal || 0),
+          0
+        ),
+      },
+    ])
+    .single();
+  console.log({ order, orderError });
+
+  const orderItemsData = orderItems.map((e: any) => ({
     productId: e.id,
     price: e.price,
     quantity: e.quantity,
@@ -141,11 +168,11 @@ export const action: ActionFunction = async ({ request }: any) => {
     orderId: order.id,
   }));
 
-  console.log(createData);
+  console.log({ customerData, orderItemsData });
 
   const { data, error } = await supabase
     .from("orderItems")
-    .insert(createData as any[]);
+    .insert(orderItemsData as any[]);
   console.log(data, error);
 
   return redirect("/thankyou");
@@ -623,7 +650,7 @@ function Checkout() {
                     <input
                       type="email"
                       id="email-address"
-                      name="email-address"
+                      name="email"
                       autoComplete="email"
                       className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
@@ -648,7 +675,7 @@ function Checkout() {
                       <input
                         type="text"
                         id="first-name"
-                        name="first-name"
+                        name="firstName"
                         autoComplete="given-name"
                         className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
@@ -666,7 +693,7 @@ function Checkout() {
                       <input
                         type="text"
                         id="last-name"
-                        name="last-name"
+                        name="lastName"
                         autoComplete="family-name"
                         className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
@@ -790,7 +817,7 @@ function Checkout() {
                     <div className="mt-1">
                       <input
                         type="text"
-                        name="postal-code"
+                        name="postalCode"
                         id="postal-code"
                         autoComplete="postal-code"
                         className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -808,7 +835,7 @@ function Checkout() {
                     <div className="mt-1">
                       <input
                         type="text"
-                        name="phone"
+                        name="phoneNumber"
                         id="phone"
                         autoComplete="tel"
                         className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
