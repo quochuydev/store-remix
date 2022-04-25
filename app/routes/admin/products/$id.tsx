@@ -27,7 +27,7 @@ export const action: ActionFunction = async ({ request, params }: any) => {
 
   console.log("categories", formData.get("categories"));
 
-  const updates = {
+  const updateData = {
     title: formData.get("title"),
     price: formData.get("price") || 0,
     originalPrice: formData.get("originalPrice") || 0,
@@ -36,7 +36,7 @@ export const action: ActionFunction = async ({ request, params }: any) => {
   };
 
   const id = params.id as string;
-  await supabase.from("products").update(updates).eq("id", id);
+  await supabase.from("products").update(updateData).eq("id", id);
 
   return redirect(`/admin/products/${id}`);
 };

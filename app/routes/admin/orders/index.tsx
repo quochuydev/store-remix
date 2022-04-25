@@ -2,8 +2,8 @@
 import AdminLayout from "~/components/admin/Layout";
 import Table from "~/components/Table";
 import { toast } from "react-toastify";
-import { productService } from "~/services";
-import { useLoaderData } from "remix";
+import { orderService } from "~/services";
+import { useLoaderData, Form, useSubmit } from "remix";
 import type { LoaderFunction } from "remix";
 import { supabase } from "~/utils/supabase.server";
 import { supabaseStrategy } from "~/auth.server";
@@ -34,6 +34,7 @@ export const loader: LoaderFunction = async ({ request }: any) => {
 };
 
 export default function Order({}) {
+  const submit = useSubmit();
   const orders = useLoaderData<any>();
 
   return (
@@ -83,7 +84,7 @@ export default function Order({}) {
             name: "",
             render: function Column(data: any) {
               return (
-                <>
+                <Form method="get" onChange={(e) => submit(e.currentTarget)}>
                   <a
                     className="text-indigo-600 hover:text-indigo-900"
                     onClick={() => {}}
@@ -99,7 +100,7 @@ export default function Order({}) {
                   <select
                     onChange={async (event) => {
                       console.log(event.target.value);
-                      await productService.update(data.id, {
+                      await orderService.update(data.id, {
                         status: event.target.value,
                       });
                       toast("Updated successfully");
@@ -111,7 +112,7 @@ export default function Order({}) {
                     <option value={"in-progress"}>In-progress</option>
                     <option value={"done"}>Done</option>
                   </select>
-                </>
+                </Form>
               );
             },
           },
