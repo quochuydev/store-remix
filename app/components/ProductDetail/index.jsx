@@ -146,7 +146,7 @@ function Product({ product, after }) {
             </p>
 
             {/* Reviews */}
-            {/* <div className="mt-6">
+            <div className="mt-6">
               <h3 className="sr-only">Reviews</h3>
               <div className="flex items-center">
                 <div className="flex items-center">
@@ -171,7 +171,7 @@ function Product({ product, after }) {
                   {reviews.totalCount} reviews
                 </a>
               </div>
-            </div> */}
+            </div>
 
             <form className="mt-10">
               {/* Colors */}
